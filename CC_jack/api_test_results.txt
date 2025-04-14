@@ -1,0 +1,216 @@
+=== Travel Agent Management System API Test Script ===
+This script will test all endpoints of your microservices application
+Mon Apr 14 08:36:54 PM IST 2025
+
+=== Testing Agent Service ===
+Testing: Create a new agent
+URL: POST http://localhost:8000/agents
+Payload: {
+    "name": "John Smith",
+    "email": "john@example.com",
+    "phone": "123-456-7890",
+    "availability": {
+        "days": ["Monday", "Wednesday", "Friday"],
+        "shift": "morning"
+    }
+}
+Success! Response:
+{
+  "id": "ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb",
+  "name": "John Smith",
+  "email": "john@example.com",
+  "phone": "123-456-7890",
+  "rating": 0.0,
+  "availability": {
+    "days": [
+      "Monday",
+      "Wednesday",
+      "Friday"
+    ],
+    "shift": "morning"
+  }
+}
+Created agent with ID: ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb
+
+Testing: List all agents
+URL: GET http://localhost:8000/agents
+Success! Response:
+[
+  {
+    "id": "ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb",
+    "name": "John Smith",
+    "email": "john@example.com",
+    "phone": "123-456-7890",
+    "rating": 0.0,
+    "availability": {
+      "days": [
+        "Monday",
+        "Wednesday",
+        "Friday"
+      ],
+      "shift": "morning"
+    }
+  }
+]
+
+Testing: Get specific agent
+URL: GET http://localhost:8000/agents/ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb
+Success! Response:
+{
+  "id": "ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb",
+  "name": "John Smith",
+  "email": "john@example.com",
+  "phone": "123-456-7890",
+  "rating": 0.0,
+  "availability": {
+    "days": [
+      "Monday",
+      "Wednesday",
+      "Friday"
+    ],
+    "shift": "morning"
+  }
+}
+
+Testing: Update agent availability
+URL: PUT http://localhost:8000/agents/ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb/availability
+Payload: {
+    "days": ["Tuesday", "Thursday"],
+    "shift": "evening"
+}
+Success! Response:
+{
+  "days": [
+    "Tuesday",
+    "Thursday"
+  ],
+  "shift": "evening"
+}
+
+Testing: Get agent availability
+URL: GET http://localhost:8000/agents/ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb/availability
+Success! Response:
+{
+  "days": [
+    "Tuesday",
+    "Thursday"
+  ],
+  "shift": "evening"
+}
+
+=== Testing Booking Service ===
+Testing: Create a new booking
+URL: POST http://localhost:8001/bookings
+Payload: {
+    "agent_id": "ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb",
+    "customer_name": "Alice Johnson",
+    "service_type": "Flight",
+    "price": 350.00
+}
+Success! Response:
+{
+  "booking_id": "59e23ed8-c399-4e7c-b218-7a0d4e3cb714",
+  "commission_amount": 35.0
+}
+Created booking with ID: 59e23ed8-c399-4e7c-b218-7a0d4e3cb714
+
+Testing: Get agent bookings
+URL: GET http://localhost:8001/agents/ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb/bookings
+Success! Response:
+[
+  {
+    "agent_id": "ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb",
+    "customer_name": "Alice Johnson",
+    "service_type": "Flight",
+    "price": 350.0
+  }
+]
+
+Testing: Get agent commission
+URL: GET http://localhost:8001/agents/ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb/commission
+Success! Response:
+[
+  {
+    "agent_id": "ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb",
+    "booking_id": "59e23ed8-c399-4e7c-b218-7a0d4e3cb714",
+    "commission_percentage": 10.0,
+    "commission_amount": 35.0
+  }
+]
+
+=== Testing Sales Service ===
+Testing: Record a sale
+URL: POST http://localhost:8002/sales/record
+Payload: {
+    "agent_id": "ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb",
+    "price": 450.00
+}
+Success! Response:
+{
+  "message": "Sale recorded"
+}
+
+Testing: Get sales by agent
+URL: GET http://localhost:8002/sales/by-agent/ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb
+Success! Response:
+[
+  {
+    "agent_id": "ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb",
+    "sales": 450.0
+  }
+]
+
+Testing: Get sales trends
+URL: GET http://localhost:8002/sales/trends
+Success! Response:
+{
+  "trend": "positive",
+  "growth_percentage": 10
+}
+
+=== Testing Invoicing Service ===
+Testing: Generate an invoice
+URL: POST http://localhost:8003/invoice
+Payload: {
+    "agent_id": "ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb",
+    "customer_name": "Bob Wilson",
+    "amount": 550.00
+}
+Success! Response:
+{
+  "invoice_id": "624ea044-0658-4cf2-82b1-5ee6386e5f71",
+  "amount": 550.0
+}
+
+Testing: Process agent payout
+URL: POST http://localhost:8003/payout
+Payload: {
+    "agent_id": "ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb",
+    "payout_amount": 220.00
+}
+Success! Response:
+{
+  "payout_id": "40daf1b3-427c-4e72-9b3c-662632db976f",
+  "amount": 220.0
+}
+
+Testing: Get agent payouts
+URL: GET http://localhost:8003/agents/ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb/payouts
+Success! Response:
+[
+  {
+    "agent_id": "ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb",
+    "payout_amount": 220.0
+  }
+]
+
+=== Test Complete ===
+All endpoints have been tested.
+
+Generating PDF report...
+Attempting to generate PDF using Python...
+Python is available but required modules are not installed.
+Install one with: pip install weasyprint or pip install pdfkit
+Text report is available at: api_test_results.txt
+HTML report is available at: api_test_results.html
+PDF report is available at: api_test_results.pdf
