@@ -1,6 +1,6 @@
 === Travel Agent Management System API Test Script ===
 This script will test all endpoints of your microservices application
-Mon Apr 14 08:36:54 PM IST 2025
+Sun Apr 20 12:54:18 PM IST 2025
 
 === Testing Agent Service ===
 Testing: Create a new agent
@@ -16,7 +16,7 @@ Payload: {
 }
 Success! Response:
 {
-  "id": "ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb",
+  "id": "ec6facf7-58be-41c5-9410-524f6c6b2c2b",
   "name": "John Smith",
   "email": "john@example.com",
   "phone": "123-456-7890",
@@ -30,14 +30,14 @@ Success! Response:
     "shift": "morning"
   }
 }
-Created agent with ID: ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb
+Created agent with ID: ec6facf7-58be-41c5-9410-524f6c6b2c2b
 
 Testing: List all agents
 URL: GET http://localhost:8000/agents
 Success! Response:
 [
   {
-    "id": "ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb",
+    "id": "ec6facf7-58be-41c5-9410-524f6c6b2c2b",
     "name": "John Smith",
     "email": "john@example.com",
     "phone": "123-456-7890",
@@ -54,10 +54,10 @@ Success! Response:
 ]
 
 Testing: Get specific agent
-URL: GET http://localhost:8000/agents/ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb
+URL: GET http://localhost:8000/agents/ec6facf7-58be-41c5-9410-524f6c6b2c2b
 Success! Response:
 {
-  "id": "ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb",
+  "id": "ec6facf7-58be-41c5-9410-524f6c6b2c2b",
   "name": "John Smith",
   "email": "john@example.com",
   "phone": "123-456-7890",
@@ -73,7 +73,7 @@ Success! Response:
 }
 
 Testing: Update agent availability
-URL: PUT http://localhost:8000/agents/ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb/availability
+URL: PUT http://localhost:8000/agents/ec6facf7-58be-41c5-9410-524f6c6b2c2b/availability
 Payload: {
     "days": ["Tuesday", "Thursday"],
     "shift": "evening"
@@ -88,7 +88,7 @@ Success! Response:
 }
 
 Testing: Get agent availability
-URL: GET http://localhost:8000/agents/ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb/availability
+URL: GET http://localhost:8000/agents/ec6facf7-58be-41c5-9410-524f6c6b2c2b/availability
 Success! Response:
 {
   "days": [
@@ -102,24 +102,24 @@ Success! Response:
 Testing: Create a new booking
 URL: POST http://localhost:8001/bookings
 Payload: {
-    "agent_id": "ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb",
+    "agent_id": "ec6facf7-58be-41c5-9410-524f6c6b2c2b",
     "customer_name": "Alice Johnson",
     "service_type": "Flight",
     "price": 350.00
 }
 Success! Response:
 {
-  "booking_id": "59e23ed8-c399-4e7c-b218-7a0d4e3cb714",
+  "booking_id": "1ca01472-87f8-477a-a28f-15de74d995ff",
   "commission_amount": 35.0
 }
-Created booking with ID: 59e23ed8-c399-4e7c-b218-7a0d4e3cb714
+Created booking with ID: 1ca01472-87f8-477a-a28f-15de74d995ff
 
 Testing: Get agent bookings
-URL: GET http://localhost:8001/agents/ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb/bookings
+URL: GET http://localhost:8001/agents/ec6facf7-58be-41c5-9410-524f6c6b2c2b/bookings
 Success! Response:
 [
   {
-    "agent_id": "ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb",
+    "agent_id": "ec6facf7-58be-41c5-9410-524f6c6b2c2b",
     "customer_name": "Alice Johnson",
     "service_type": "Flight",
     "price": 350.0
@@ -127,12 +127,12 @@ Success! Response:
 ]
 
 Testing: Get agent commission
-URL: GET http://localhost:8001/agents/ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb/commission
+URL: GET http://localhost:8001/agents/ec6facf7-58be-41c5-9410-524f6c6b2c2b/commission
 Success! Response:
 [
   {
-    "agent_id": "ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb",
-    "booking_id": "59e23ed8-c399-4e7c-b218-7a0d4e3cb714",
+    "agent_id": "ec6facf7-58be-41c5-9410-524f6c6b2c2b",
+    "booking_id": "1ca01472-87f8-477a-a28f-15de74d995ff",
     "commission_percentage": 10.0,
     "commission_amount": 35.0
   }
@@ -142,7 +142,7 @@ Success! Response:
 Testing: Record a sale
 URL: POST http://localhost:8002/sales/record
 Payload: {
-    "agent_id": "ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb",
+    "agent_id": "ec6facf7-58be-41c5-9410-524f6c6b2c2b",
     "price": 450.00
 }
 Success! Response:
@@ -151,11 +151,11 @@ Success! Response:
 }
 
 Testing: Get sales by agent
-URL: GET http://localhost:8002/sales/by-agent/ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb
+URL: GET http://localhost:8002/sales/by-agent/ec6facf7-58be-41c5-9410-524f6c6b2c2b
 Success! Response:
 [
   {
-    "agent_id": "ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb",
+    "agent_id": "ec6facf7-58be-41c5-9410-524f6c6b2c2b",
     "sales": 450.0
   }
 ]
@@ -172,34 +172,34 @@ Success! Response:
 Testing: Generate an invoice
 URL: POST http://localhost:8003/invoice
 Payload: {
-    "agent_id": "ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb",
+    "agent_id": "ec6facf7-58be-41c5-9410-524f6c6b2c2b",
     "customer_name": "Bob Wilson",
     "amount": 550.00
 }
 Success! Response:
 {
-  "invoice_id": "624ea044-0658-4cf2-82b1-5ee6386e5f71",
+  "invoice_id": "b4bbcd3a-7698-4547-862e-487109ef5a92",
   "amount": 550.0
 }
 
 Testing: Process agent payout
 URL: POST http://localhost:8003/payout
 Payload: {
-    "agent_id": "ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb",
+    "agent_id": "ec6facf7-58be-41c5-9410-524f6c6b2c2b",
     "payout_amount": 220.00
 }
 Success! Response:
 {
-  "payout_id": "40daf1b3-427c-4e72-9b3c-662632db976f",
+  "payout_id": "e2ebd8fd-a260-458c-b973-1950a6a6ac20",
   "amount": 220.0
 }
 
 Testing: Get agent payouts
-URL: GET http://localhost:8003/agents/ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb/payouts
+URL: GET http://localhost:8003/agents/ec6facf7-58be-41c5-9410-524f6c6b2c2b/payouts
 Success! Response:
 [
   {
-    "agent_id": "ad33cbd0-b5ab-4e5f-ba06-8d43e3ce18eb",
+    "agent_id": "ec6facf7-58be-41c5-9410-524f6c6b2c2b",
     "payout_amount": 220.0
   }
 ]

@@ -1,6 +1,6 @@
 import sys
 try:
-    from weasyprint import HTML
+    import weasyprint
     HTML('api_test_results.html').write_pdf('api_test_results.pdf')
     print('PDF generated successfully using WeasyPrint!')
     sys.exit(0)
