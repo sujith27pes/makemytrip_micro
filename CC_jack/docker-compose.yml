@@ -34,7 +34,7 @@ services:
   train_booking_service:
     build: ./train_booking_service
     ports:
-      - "8084:8004"
+      - "8004:8004"
     depends_on:
       - agent_service
       - booking_service

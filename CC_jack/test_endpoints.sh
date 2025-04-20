@@ -30,6 +30,7 @@ AGENT_SERVICE="http://localhost:8000"
 BOOKING_SERVICE="http://localhost:8001"
 SALES_SERVICE="http://localhost:8002"
 INVOICING_SERVICE="http://localhost:8003"
+TRAIN_BOOKING_SERVICE="http://localhost:8004"  # Port 8084 as specified in docker-compose.yml
 
 # Function to make API calls and check responses
 call_api() {
@@ -65,6 +66,7 @@ call_api() {
 # Store IDs for cross-service testing
 AGENT_ID=""
 BOOKING_ID=""
+TRAIN_BOOKING_ID=""
 
 log "${BLUE}=== Testing Agent Service ===${NC}"
 
@@ -147,7 +149,6 @@ call_api "POST" "${SALES_SERVICE}/sales/record" '{
 # Test sales service endpoints
 call_api "GET" "${SALES_SERVICE}/sales/by-agent/${AGENT_ID}" "" "Get sales by agent"
 call_api "GET" "${SALES_SERVICE}/sales/trends" "" "Get sales trends"
-# Removed the sales summary endpoint test
 
 log "${BLUE}=== Testing Invoicing Service ===${NC}"
 
@@ -166,6 +167,70 @@ call_api "POST" "${INVOICING_SERVICE}/payout" '{
 
 # Get agent payouts
 call_api "GET" "${INVOICING_SERVICE}/agents/${AGENT_ID}/payouts" "" "Get agent payouts"
+
+log "${BLUE}=== Testing Train Booking Service ===${NC}"
+
+# Get list of trains
+call_api "GET" "${TRAIN_BOOKING_SERVICE}/trains" "" "List all trains"
+
+# Get specific train details
+call_api "GET" "${TRAIN_BOOKING_SERVICE}/trains/TRN001" "" "Get specific train details"
+
+# Create a train booking
+log "${YELLOW}Testing: Create a new train booking${NC}"
+log "URL: POST ${TRAIN_BOOKING_SERVICE}/train-bookings"
+train_booking_payload='{
+    "agent_id": "'$AGENT_ID'",
+    "train_number": "TRN001",
+    "travel_date": "2025-05-15",
+    "passenger_count": 2,
+    "train_class": "First Class",
+    "passengers": [
+        {
+            "name": "Jane Smith",
+            "age": 35,
+            "id_type": "Passport",
+            "id_number": "AB123456"
+        },
+        {
+            "name": "David Smith",
+            "age": 40,
+            "id_type": "Passport",
+            "id_number": "CD789012"
+        }
+    ],
+    "special_requests": "Window seats preferred"
+}'
+log "Payload: $train_booking_payload"
+
+train_booking_response=$(curl -s -X POST ${TRAIN_BOOKING_SERVICE}/train-bookings -H "Content-Type: application/json" -d "$train_booking_payload")
+
+# Extract train booking ID from response
+if echo "$train_booking_response" | jq . >/dev/null 2>&1; then
+    TRAIN_BOOKING_ID=$(echo $train_booking_response | jq -r '.booking_id')
+    log "${GREEN}Success! Response:${NC}"
+    log "$(echo "$train_booking_response" | jq .)"
+    log "Created train booking with ID: $TRAIN_BOOKING_ID"
+else
+    log "${RED}Error: Invalid response${NC}"
+    log "$train_booking_response"
+fi
+log ""
+
+# Get list of all train bookings
+call_api "GET" "${TRAIN_BOOKING_SERVICE}/train-bookings" "" "List all train bookings"
+
+# Get specific train booking
+call_api "GET" "${TRAIN_BOOKING_SERVICE}/train-bookings/${TRAIN_BOOKING_ID}" "" "Get specific train booking details"
+
+# Get agent's train bookings
+call_api "GET" "${TRAIN_BOOKING_SERVICE}/agents/${AGENT_ID}/train-bookings" "" "Get agent's train bookings"
+
+# Cancel train booking
+call_api "PUT" "${TRAIN_BOOKING_SERVICE}/train-bookings/${TRAIN_BOOKING_ID}/cancel" "" "Cancel train booking"
+
+# Search train bookings
+call_api "GET" "${TRAIN_BOOKING_SERVICE}/train-bookings/search?agent_id=${AGENT_ID}&status=Cancelled" "" "Search train bookings by criteria"
 
 log "${BLUE}=== Test Complete ===${NC}"
 log "All endpoints have been tested."
@@ -268,7 +333,7 @@ elif command -v python3 &> /dev/null; then
     cat > pdf_generator.py << EOF
 import sys
 try:
-    import weasyprint
+    from weasyprint import HTML
     HTML('$HTML_OUTPUT').write_pdf('$PDF_OUTPUT')
     print('PDF generated successfully using WeasyPrint!')
     sys.exit(0)

@@ -1,6 +1,6 @@
 === Travel Agent Management System API Test Script ===
 This script will test all endpoints of your microservices application
-Sun Apr 20 12:54:18 PM IST 2025
+Sun Apr 20 01:06:20 PM IST 2025
 
 === Testing Agent Service ===
 Testing: Create a new agent
@@ -16,7 +16,7 @@ Payload: {
 }
 Success! Response:
 {
-  "id": "ec6facf7-58be-41c5-9410-524f6c6b2c2b",
+  "id": "fb4c7017-0d73-4b8e-a0fc-d2febf480eeb",
   "name": "John Smith",
   "email": "john@example.com",
   "phone": "123-456-7890",
@@ -30,14 +30,14 @@ Success! Response:
     "shift": "morning"
   }
 }
-Created agent with ID: ec6facf7-58be-41c5-9410-524f6c6b2c2b
+Created agent with ID: fb4c7017-0d73-4b8e-a0fc-d2febf480eeb
 
 Testing: List all agents
 URL: GET http://localhost:8000/agents
 Success! Response:
 [
   {
-    "id": "ec6facf7-58be-41c5-9410-524f6c6b2c2b",
+    "id": "fb4c7017-0d73-4b8e-a0fc-d2febf480eeb",
     "name": "John Smith",
     "email": "john@example.com",
     "phone": "123-456-7890",
@@ -54,10 +54,10 @@ Success! Response:
 ]
 
 Testing: Get specific agent
-URL: GET http://localhost:8000/agents/ec6facf7-58be-41c5-9410-524f6c6b2c2b
+URL: GET http://localhost:8000/agents/fb4c7017-0d73-4b8e-a0fc-d2febf480eeb
 Success! Response:
 {
-  "id": "ec6facf7-58be-41c5-9410-524f6c6b2c2b",
+  "id": "fb4c7017-0d73-4b8e-a0fc-d2febf480eeb",
   "name": "John Smith",
   "email": "john@example.com",
   "phone": "123-456-7890",
@@ -73,7 +73,7 @@ Success! Response:
 }
 
 Testing: Update agent availability
-URL: PUT http://localhost:8000/agents/ec6facf7-58be-41c5-9410-524f6c6b2c2b/availability
+URL: PUT http://localhost:8000/agents/fb4c7017-0d73-4b8e-a0fc-d2febf480eeb/availability
 Payload: {
     "days": ["Tuesday", "Thursday"],
     "shift": "evening"
@@ -88,7 +88,7 @@ Success! Response:
 }
 
 Testing: Get agent availability
-URL: GET http://localhost:8000/agents/ec6facf7-58be-41c5-9410-524f6c6b2c2b/availability
+URL: GET http://localhost:8000/agents/fb4c7017-0d73-4b8e-a0fc-d2febf480eeb/availability
 Success! Response:
 {
   "days": [
@@ -102,24 +102,24 @@ Success! Response:
 Testing: Create a new booking
 URL: POST http://localhost:8001/bookings
 Payload: {
-    "agent_id": "ec6facf7-58be-41c5-9410-524f6c6b2c2b",
+    "agent_id": "fb4c7017-0d73-4b8e-a0fc-d2febf480eeb",
     "customer_name": "Alice Johnson",
     "service_type": "Flight",
     "price": 350.00
 }
 Success! Response:
 {
-  "booking_id": "1ca01472-87f8-477a-a28f-15de74d995ff",
+  "booking_id": "7db2016a-3d15-4fa5-86f8-308b7583d8a0",
   "commission_amount": 35.0
 }
-Created booking with ID: 1ca01472-87f8-477a-a28f-15de74d995ff
+Created booking with ID: 7db2016a-3d15-4fa5-86f8-308b7583d8a0
 
 Testing: Get agent bookings
-URL: GET http://localhost:8001/agents/ec6facf7-58be-41c5-9410-524f6c6b2c2b/bookings
+URL: GET http://localhost:8001/agents/fb4c7017-0d73-4b8e-a0fc-d2febf480eeb/bookings
 Success! Response:
 [
   {
-    "agent_id": "ec6facf7-58be-41c5-9410-524f6c6b2c2b",
+    "agent_id": "fb4c7017-0d73-4b8e-a0fc-d2febf480eeb",
     "customer_name": "Alice Johnson",
     "service_type": "Flight",
     "price": 350.0
@@ -127,12 +127,12 @@ Success! Response:
 ]
 
 Testing: Get agent commission
-URL: GET http://localhost:8001/agents/ec6facf7-58be-41c5-9410-524f6c6b2c2b/commission
+URL: GET http://localhost:8001/agents/fb4c7017-0d73-4b8e-a0fc-d2febf480eeb/commission
 Success! Response:
 [
   {
-    "agent_id": "ec6facf7-58be-41c5-9410-524f6c6b2c2b",
-    "booking_id": "1ca01472-87f8-477a-a28f-15de74d995ff",
+    "agent_id": "fb4c7017-0d73-4b8e-a0fc-d2febf480eeb",
+    "booking_id": "7db2016a-3d15-4fa5-86f8-308b7583d8a0",
     "commission_percentage": 10.0,
     "commission_amount": 35.0
   }
@@ -142,7 +142,7 @@ Success! Response:
 Testing: Record a sale
 URL: POST http://localhost:8002/sales/record
 Payload: {
-    "agent_id": "ec6facf7-58be-41c5-9410-524f6c6b2c2b",
+    "agent_id": "fb4c7017-0d73-4b8e-a0fc-d2febf480eeb",
     "price": 450.00
 }
 Success! Response:
@@ -151,11 +151,11 @@ Success! Response:
 }
 
 Testing: Get sales by agent
-URL: GET http://localhost:8002/sales/by-agent/ec6facf7-58be-41c5-9410-524f6c6b2c2b
+URL: GET http://localhost:8002/sales/by-agent/fb4c7017-0d73-4b8e-a0fc-d2febf480eeb
 Success! Response:
 [
   {
-    "agent_id": "ec6facf7-58be-41c5-9410-524f6c6b2c2b",
+    "agent_id": "fb4c7017-0d73-4b8e-a0fc-d2febf480eeb",
     "sales": 450.0
   }
 ]
@@ -172,37 +172,101 @@ Success! Response:
 Testing: Generate an invoice
 URL: POST http://localhost:8003/invoice
 Payload: {
-    "agent_id": "ec6facf7-58be-41c5-9410-524f6c6b2c2b",
+    "agent_id": "fb4c7017-0d73-4b8e-a0fc-d2febf480eeb",
     "customer_name": "Bob Wilson",
     "amount": 550.00
 }
 Success! Response:
 {
-  "invoice_id": "b4bbcd3a-7698-4547-862e-487109ef5a92",
+  "invoice_id": "af9117d2-ded5-4761-8996-a60cbf5d96cc",
   "amount": 550.0
 }
 
 Testing: Process agent payout
 URL: POST http://localhost:8003/payout
 Payload: {
-    "agent_id": "ec6facf7-58be-41c5-9410-524f6c6b2c2b",
+    "agent_id": "fb4c7017-0d73-4b8e-a0fc-d2febf480eeb",
     "payout_amount": 220.00
 }
 Success! Response:
 {
-  "payout_id": "e2ebd8fd-a260-458c-b973-1950a6a6ac20",
+  "payout_id": "4c54f785-e06b-44f1-bca4-2f2db322f153",
   "amount": 220.0
 }
 
 Testing: Get agent payouts
-URL: GET http://localhost:8003/agents/ec6facf7-58be-41c5-9410-524f6c6b2c2b/payouts
+URL: GET http://localhost:8003/agents/fb4c7017-0d73-4b8e-a0fc-d2febf480eeb/payouts
 Success! Response:
 [
   {
-    "agent_id": "ec6facf7-58be-41c5-9410-524f6c6b2c2b",
+    "agent_id": "fb4c7017-0d73-4b8e-a0fc-d2febf480eeb",
     "payout_amount": 220.0
   }
 ]
+
+=== Testing Train Booking Service ===
+Testing: List all trains
+URL: GET http://localhost:8004/trains
+Success! Response:
+
+
+Testing: Get specific train details
+URL: GET http://localhost:8004/trains/TRN001
+Success! Response:
+
+
+Testing: Create a new train booking
+URL: POST http://localhost:8004/train-bookings
+Payload: {
+    "agent_id": "fb4c7017-0d73-4b8e-a0fc-d2febf480eeb",
+    "train_number": "TRN001",
+    "travel_date": "2025-05-15",
+    "passenger_count": 2,
+    "train_class": "First Class",
+    "passengers": [
+        {
+            "name": "Jane Smith",
+            "age": 35,
+            "id_type": "Passport",
+            "id_number": "AB123456"
+        },
+        {
+            "name": "David Smith",
+            "age": 40,
+            "id_type": "Passport",
+            "id_number": "CD789012"
+        }
+    ],
+    "special_requests": "Window seats preferred"
+}
+Success! Response:
+
+Created train booking with ID: 
+
+Testing: List all train bookings
+URL: GET http://localhost:8004/train-bookings
+Success! Response:
+
+
+Testing: Get specific train booking details
+URL: GET http://localhost:8004/train-bookings/
+Success! Response:
+
+
+Testing: Get agent's train bookings
+URL: GET http://localhost:8004/agents/fb4c7017-0d73-4b8e-a0fc-d2febf480eeb/train-bookings
+Success! Response:
+
+
+Testing: Cancel train booking
+URL: PUT http://localhost:8004/train-bookings//cancel
+Success! Response:
+
+
+Testing: Search train bookings by criteria
+URL: GET http://localhost:8004/train-bookings/search?agent_id=fb4c7017-0d73-4b8e-a0fc-d2febf480eeb&status=Cancelled
+Success! Response:
+
 
 === Test Complete ===
 All endpoints have been tested.
