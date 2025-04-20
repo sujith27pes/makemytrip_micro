@@ -30,7 +30,7 @@ AGENT_SERVICE="http://localhost:8000"
 BOOKING_SERVICE="http://localhost:8001"
 SALES_SERVICE="http://localhost:8002"
 INVOICING_SERVICE="http://localhost:8003"
-TRAIN_BOOKING_SERVICE="http://localhost:8004"  # Port 8084 as specified in docker-compose.yml
+TRAIN_BOOKING_SERVICE="http://localhost:8084"  # Port 8084 as specified in docker-compose.yml
 
 # Function to make API calls and check responses
 call_api() {
