@@ -1,15 +1,17 @@
 # Travel Agent Management System
 
-A microservices-based application for managing travel agents, bookings, sales, and invoicing. This system allows travel agencies to efficiently manage their agents' information, track bookings and commissions, record sales, and process payouts.
+A comprehensive microservices-based application for managing travel agents, bookings, sales, and invoicing. This system allows travel agencies to efficiently manage their agents' information, track bookings and commissions, record sales, process payouts, and handle train bookings with seat management.
 
 ## 🏗️ Architecture
 
-The system consists of four microservices:
+The system consists of six integrated microservices:
 
 1. **Agent Service** (Port 8000): Manages travel agent profiles and availability
 2. **Booking Service** (Port 8001): Handles customer bookings and agent commissions
 3. **Sales Service** (Port 8002): Tracks sales data and provides trend analysis
 4. **Invoicing Service** (Port 8003): Processes invoices and agent payouts
+5. **Train Booking Service** (Port 8084): Manages train bookings, information, and pricing
+6. **Train Seat Status Service** (Port 8090): Tracks seat reservations and status
 
 ## 🚀 Features
 
@@ -33,12 +35,26 @@ The system consists of four microservices:
   - Process agent commission payouts
   - Track payout history
 
+- **Train Booking System**
+  - Browse available trains with routes and timings
+  - Book train tickets with multiple passenger support
+  - Select train class with automatic pricing
+  - Track and manage bookings by agent
+    
+
+- **Train Seat Management**
+  - Track seat status for bookings
+  - Handle seat reservation confirmations
+  - Process seat cancellations
+
 ## 🛠️ Technologies
 
 - **Backend**: FastAPI (Python)
 - **Containerization**: Docker
 - **Service Orchestration**: Docker Compose
+- **Service Communication**: httpx
 - **Testing**: Shell scripting with curl and jq
+- **Documentation**: Markdown
 
 ## 📋 Prerequisites
 
@@ -52,13 +68,13 @@ The system consists of four microservices:
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/travel-agent-management.git
-   cd travel-agent-management
+   git clone https://github.com/sujith27pes/makemytrip_micro.git
+   cd makemytrip_micro
    ```
 
 2. Build and start the services:
    ```bash
-   docker-compose up -d --build
+   docker-compose up --build
    ```
 
 3. Verify all services are running:
@@ -117,6 +133,27 @@ This will generate:
 | `/invoice` | POST | Generate a new invoice |
 | `/payout` | POST | Process agent payout |
 | `/agents/{agent_id}/payouts` | GET | Get agent's payout history |
+
+### Train Booking Service (Port 8084)
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/trains` | GET | List all available trains |
+| `/trains/{train_number}` | GET | Get details of a specific train |
+| `/train-bookings` | POST | Create a new train booking |
+| `/train-bookings` | GET | List all train bookings |
+| `/train-bookings/{booking_id}` | GET | Get details of a specific train booking |
+| `/agents/{agent_id}/train-bookings` | GET | Get all train bookings for a specific agent |
+
+
+
+### Train Seat Status Service (Port 8090)
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/bookings/{booking_id}/seats/status` | GET | Check seat status for a booking |
+| `/bookings/{booking_id}/seats/cancel` | PUT | Cancel seat reservations for a booking |
+
 
 ## 📊 Data Models
 
@@ -177,6 +214,79 @@ This will generate:
 }
 ```
 
+### Train
+
+```json
+{
+  "train_number": "string",
+  "name": "string",
+  "source": "string",
+  "destination": "string",
+  "departure_time": "string",
+  "arrival_time": "string",
+  "available_classes": ["string"],
+  "base_price": {
+    "class_name": "float"
+  }
+}
+```
+
+### TrainBooking
+
+```json
+{
+  "booking_id": "UUID",
+  "agent_id": "UUID",
+  "train_number": "string",
+  "train_name": "string",
+  "source": "string",
+  "destination": "string",
+  "travel_date": "string",
+  "departure_time": "string",
+  "arrival_time": "string",
+  "train_class": "string",
+  "price_per_passenger": "float",
+  "total_price": "float",
+  "passenger_count": "integer",
+  "passengers": [
+    {
+      "name": "string",
+      "age": "integer",
+      "id_type": "string",
+      "id_number": "string"
+    }
+  ],
+  "special_requests": "string (optional)",
+  "booking_date": "string",
+  "status": "string"
+}
+```
+
+### SeatStatus
+
+```json
+{
+  "booking_id": "UUID",
+  "train_number": "string",
+  "seats": ["string"],
+  "travel_date": "string",
+  "status": "string"
+}
+```
+
+## 🔄 Service Integration
+
+The Travel Agent Management System uses a microservices architecture with the following integration points:
+
+- **Agent Service**: Core service for agent management
+- **Booking Service**: Integrates with Agent Service to validate agents
+- **Train Booking Service**: Integrates with both Agent Service and Booking Service
+- **Train Seat Status Service**: Integrates with Train Booking Service
+- **Sales Service**: Records sales data from bookings
+- **Invoicing Service**: Processes invoices based on booking data
+
+The services communicate via RESTful APIs using httpx, with Docker Compose providing service discovery and networking.
+
 ## 🤝 Contributing
 
 1. Fork the repository
@@ -189,10 +299,3 @@ This will generate:
 
 This project is licensed under the MIT License - see the `LICENSE` file for details.
 
-## 🔮 Future Enhancements
-
-- Add user authentication and authorization
-- Implement persistent database storage
-- Create a web frontend for easier management
-- Add reporting and analytics features
-- Implement notification system for agents
