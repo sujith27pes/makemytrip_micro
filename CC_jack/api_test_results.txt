@@ -1,6 +1,6 @@
 === Travel Agent Management System API Test Script ===
-This script will test all endpoints of your microservices application
-Mon Apr 21 12:37:19 PM IST 2025
+This script will test all existing endpoints of your microservices application
+Mon Apr 21 10:37:01 PM IST 2025
 
 === Testing Agent Service ===
 Testing: Create a new agent
@@ -16,7 +16,7 @@ Payload: {
 }
 Success! Response:
 {
-  "id": "1bc6b65e-233c-453c-a916-8763e03e27bd",
+  "id": "1ad8f6e7-c4c1-45d2-a72d-37a619e3cb5c",
   "name": "John Smith",
   "email": "john@example.com",
   "phone": "123-456-7890",
@@ -30,14 +30,28 @@ Success! Response:
     "shift": "morning"
   }
 }
-Created agent with ID: 1bc6b65e-233c-453c-a916-8763e03e27bd
+Created agent with ID: 1ad8f6e7-c4c1-45d2-a72d-37a619e3cb5c
 
 Testing: List all agents
 URL: GET http://localhost:8000/agents
 Success! Response:
 [
   {
-    "id": "1bc6b65e-233c-453c-a916-8763e03e27bd",
+    "id": "51757943-6eeb-4dad-8ca5-5a264ea3a7a3",
+    "name": "John Smith",
+    "email": "john@example.com",
+    "phone": "123-456-7890",
+    "rating": 0.0,
+    "availability": {
+      "days": [
+        "Tuesday",
+        "Thursday"
+      ],
+      "shift": "evening"
+    }
+  },
+  {
+    "id": "1ad8f6e7-c4c1-45d2-a72d-37a619e3cb5c",
     "name": "John Smith",
     "email": "john@example.com",
     "phone": "123-456-7890",
@@ -54,10 +68,10 @@ Success! Response:
 ]
 
 Testing: Get specific agent
-URL: GET http://localhost:8000/agents/1bc6b65e-233c-453c-a916-8763e03e27bd
+URL: GET http://localhost:8000/agents/1ad8f6e7-c4c1-45d2-a72d-37a619e3cb5c
 Success! Response:
 {
-  "id": "1bc6b65e-233c-453c-a916-8763e03e27bd",
+  "id": "1ad8f6e7-c4c1-45d2-a72d-37a619e3cb5c",
   "name": "John Smith",
   "email": "john@example.com",
   "phone": "123-456-7890",
@@ -73,7 +87,7 @@ Success! Response:
 }
 
 Testing: Update agent availability
-URL: PUT http://localhost:8000/agents/1bc6b65e-233c-453c-a916-8763e03e27bd/availability
+URL: PUT http://localhost:8000/agents/1ad8f6e7-c4c1-45d2-a72d-37a619e3cb5c/availability
 Payload: {
     "days": ["Tuesday", "Thursday"],
     "shift": "evening"
@@ -88,7 +102,7 @@ Success! Response:
 }
 
 Testing: Get agent availability
-URL: GET http://localhost:8000/agents/1bc6b65e-233c-453c-a916-8763e03e27bd/availability
+URL: GET http://localhost:8000/agents/1ad8f6e7-c4c1-45d2-a72d-37a619e3cb5c/availability
 Success! Response:
 {
   "days": [
@@ -102,24 +116,24 @@ Success! Response:
 Testing: Create a new booking
 URL: POST http://localhost:8001/bookings
 Payload: {
-    "agent_id": "1bc6b65e-233c-453c-a916-8763e03e27bd",
+    "agent_id": "1ad8f6e7-c4c1-45d2-a72d-37a619e3cb5c",
     "customer_name": "Alice Johnson",
     "service_type": "Flight",
     "price": 350.00
 }
 Success! Response:
 {
-  "booking_id": "dc512d44-0aee-43b6-8081-f338bf40a2e2",
+  "booking_id": "9ba4f7ec-2082-4991-9c05-ba3c6abc0555",
   "commission_amount": 35.0
 }
-Created booking with ID: dc512d44-0aee-43b6-8081-f338bf40a2e2
+Created booking with ID: 9ba4f7ec-2082-4991-9c05-ba3c6abc0555
 
 Testing: Get agent bookings
-URL: GET http://localhost:8001/agents/1bc6b65e-233c-453c-a916-8763e03e27bd/bookings
+URL: GET http://localhost:8001/agents/1ad8f6e7-c4c1-45d2-a72d-37a619e3cb5c/bookings
 Success! Response:
 [
   {
-    "agent_id": "1bc6b65e-233c-453c-a916-8763e03e27bd",
+    "agent_id": "1ad8f6e7-c4c1-45d2-a72d-37a619e3cb5c",
     "customer_name": "Alice Johnson",
     "service_type": "Flight",
     "price": 350.0
@@ -127,12 +141,12 @@ Success! Response:
 ]
 
 Testing: Get agent commission
-URL: GET http://localhost:8001/agents/1bc6b65e-233c-453c-a916-8763e03e27bd/commission
+URL: GET http://localhost:8001/agents/1ad8f6e7-c4c1-45d2-a72d-37a619e3cb5c/commission
 Success! Response:
 [
   {
-    "agent_id": "1bc6b65e-233c-453c-a916-8763e03e27bd",
-    "booking_id": "dc512d44-0aee-43b6-8081-f338bf40a2e2",
+    "agent_id": "1ad8f6e7-c4c1-45d2-a72d-37a619e3cb5c",
+    "booking_id": "9ba4f7ec-2082-4991-9c05-ba3c6abc0555",
     "commission_percentage": 10.0,
     "commission_amount": 35.0
   }
@@ -142,7 +156,7 @@ Success! Response:
 Testing: Record a sale
 URL: POST http://localhost:8002/sales/record
 Payload: {
-    "agent_id": "1bc6b65e-233c-453c-a916-8763e03e27bd",
+    "agent_id": "1ad8f6e7-c4c1-45d2-a72d-37a619e3cb5c",
     "price": 450.00
 }
 Success! Response:
@@ -151,11 +165,11 @@ Success! Response:
 }
 
 Testing: Get sales by agent
-URL: GET http://localhost:8002/sales/by-agent/1bc6b65e-233c-453c-a916-8763e03e27bd
+URL: GET http://localhost:8002/sales/by-agent/1ad8f6e7-c4c1-45d2-a72d-37a619e3cb5c
 Success! Response:
 [
   {
-    "agent_id": "1bc6b65e-233c-453c-a916-8763e03e27bd",
+    "agent_id": "1ad8f6e7-c4c1-45d2-a72d-37a619e3cb5c",
     "sales": 450.0
   }
 ]
@@ -172,34 +186,34 @@ Success! Response:
 Testing: Generate an invoice
 URL: POST http://localhost:8003/invoice
 Payload: {
-    "agent_id": "1bc6b65e-233c-453c-a916-8763e03e27bd",
+    "agent_id": "1ad8f6e7-c4c1-45d2-a72d-37a619e3cb5c",
     "customer_name": "Bob Wilson",
     "amount": 550.00
 }
 Success! Response:
 {
-  "invoice_id": "f17e7bd4-ccae-4964-8e9c-4e674cca322e",
+  "invoice_id": "8b0dffbd-62a3-4f7d-a16f-73e694bbc34b",
   "amount": 550.0
 }
 
 Testing: Process agent payout
 URL: POST http://localhost:8003/payout
 Payload: {
-    "agent_id": "1bc6b65e-233c-453c-a916-8763e03e27bd",
+    "agent_id": "1ad8f6e7-c4c1-45d2-a72d-37a619e3cb5c",
     "payout_amount": 220.00
 }
 Success! Response:
 {
-  "payout_id": "b157a71e-1bfd-47d0-be00-0ca44adabac8",
+  "payout_id": "cd96dfdc-5520-4249-959f-1369369bdd75",
   "amount": 220.0
 }
 
 Testing: Get agent payouts
-URL: GET http://localhost:8003/agents/1bc6b65e-233c-453c-a916-8763e03e27bd/payouts
+URL: GET http://localhost:8003/agents/1ad8f6e7-c4c1-45d2-a72d-37a619e3cb5c/payouts
 Success! Response:
 [
   {
-    "agent_id": "1bc6b65e-233c-453c-a916-8763e03e27bd",
+    "agent_id": "1ad8f6e7-c4c1-45d2-a72d-37a619e3cb5c",
     "payout_amount": 220.0
   }
 ]
@@ -288,7 +302,7 @@ Success! Response:
 Testing: Create a new train booking
 URL: POST http://localhost:8084/train-bookings
 Payload: {
-    "agent_id": "1bc6b65e-233c-453c-a916-8763e03e27bd",
+    "agent_id": "1ad8f6e7-c4c1-45d2-a72d-37a619e3cb5c",
     "train_number": "TRN001",
     "travel_date": "2025-05-15",
     "passenger_count": 2,
@@ -311,8 +325,8 @@ Payload: {
 }
 Success! Response:
 {
-  "booking_id": "91feb6bb-3af9-4b31-9971-fe458fbe0463",
-  "agent_id": "1bc6b65e-233c-453c-a916-8763e03e27bd",
+  "booking_id": "bb093949-fe40-47be-8e2e-0ba7a1fcd68b",
+  "agent_id": "1ad8f6e7-c4c1-45d2-a72d-37a619e3cb5c",
   "train_number": "TRN001",
   "train_name": "Express 505",
   "source": "New York",
@@ -342,15 +356,47 @@ Success! Response:
   "booking_date": "2025-04-21",
   "status": "Confirmed"
 }
-Created train booking with ID: 91feb6bb-3af9-4b31-9971-fe458fbe0463
+Created train booking with ID: bb093949-fe40-47be-8e2e-0ba7a1fcd68b
 
 Testing: List all train bookings
 URL: GET http://localhost:8084/train-bookings
 Success! Response:
 [
   {
-    "booking_id": "91feb6bb-3af9-4b31-9971-fe458fbe0463",
-    "agent_id": "1bc6b65e-233c-453c-a916-8763e03e27bd",
+    "booking_id": "c7bebcea-3983-4baa-8fb2-e424b87086db",
+    "agent_id": "51757943-6eeb-4dad-8ca5-5a264ea3a7a3",
+    "train_number": "TRN001",
+    "train_name": "Express 505",
+    "source": "New York",
+    "destination": "Washington DC",
+    "travel_date": "2025-05-15",
+    "departure_time": "08:30",
+    "arrival_time": "12:00",
+    "train_class": "First Class",
+    "price_per_passenger": 150.0,
+    "total_price": 300.0,
+    "passenger_count": 2,
+    "passengers": [
+      {
+        "name": "Jane Smith",
+        "age": 35,
+        "id_type": "Passport",
+        "id_number": "AB123456"
+      },
+      {
+        "name": "David Smith",
+        "age": 40,
+        "id_type": "Passport",
+        "id_number": "CD789012"
+      }
+    ],
+    "special_requests": "Window seats preferred",
+    "booking_date": "2025-04-21",
+    "status": "Cancelled"
+  },
+  {
+    "booking_id": "bb093949-fe40-47be-8e2e-0ba7a1fcd68b",
+    "agent_id": "1ad8f6e7-c4c1-45d2-a72d-37a619e3cb5c",
     "train_number": "TRN001",
     "train_name": "Express 505",
     "source": "New York",
@@ -383,11 +429,11 @@ Success! Response:
 ]
 
 Testing: Get specific train booking details
-URL: GET http://localhost:8084/train-bookings/91feb6bb-3af9-4b31-9971-fe458fbe0463
+URL: GET http://localhost:8084/train-bookings/bb093949-fe40-47be-8e2e-0ba7a1fcd68b
 Success! Response:
 {
-  "booking_id": "91feb6bb-3af9-4b31-9971-fe458fbe0463",
-  "agent_id": "1bc6b65e-233c-453c-a916-8763e03e27bd",
+  "booking_id": "bb093949-fe40-47be-8e2e-0ba7a1fcd68b",
+  "agent_id": "1ad8f6e7-c4c1-45d2-a72d-37a619e3cb5c",
   "train_number": "TRN001",
   "train_name": "Express 505",
   "source": "New York",
@@ -419,12 +465,12 @@ Success! Response:
 }
 
 Testing: Get agent's train bookings
-URL: GET http://localhost:8084/agents/1bc6b65e-233c-453c-a916-8763e03e27bd/train-bookings
+URL: GET http://localhost:8084/agents/1ad8f6e7-c4c1-45d2-a72d-37a619e3cb5c/train-bookings
 Success! Response:
 [
   {
-    "booking_id": "91feb6bb-3af9-4b31-9971-fe458fbe0463",
-    "agent_id": "1bc6b65e-233c-453c-a916-8763e03e27bd",
+    "booking_id": "bb093949-fe40-47be-8e2e-0ba7a1fcd68b",
+    "agent_id": "1ad8f6e7-c4c1-45d2-a72d-37a619e3cb5c",
     "train_number": "TRN001",
     "train_name": "Express 505",
     "source": "New York",
@@ -456,988 +502,54 @@ Success! Response:
   }
 ]
 
-Testing: Search train bookings by criteria
-URL: GET http://localhost:8084/train-bookings/search?agent_id=1bc6b65e-233c-453c-a916-8763e03e27bd
-Success! Response:
-{
-  "detail": [
-    {
-      "type": "uuid_parsing",
-      "loc": [
-        "path",
-        "booking_id"
-      ],
-      "msg": "Input should be a valid UUID, invalid character: expected an optional prefix of `urn:uuid:` followed by [0-9a-fA-F-], found `s` at 1",
-      "input": "search",
-      "ctx": {
-        "error": "invalid character: expected an optional prefix of `urn:uuid:` followed by [0-9a-fA-F-], found `s` at 1"
-      }
-    }
-  ]
-}
-
 === Testing Train Seat Status Service ===
-Testing: Get train seat map
-URL: GET http://localhost:8090/trains/TRN001/seats?travel_date=2025-05-15
-Success! Response:
-{
-  "train_number": "TRN001",
-  "coaches": [
-    {
-      "coach_number": "FC1",
-      "coach_class": "First Class",
-      "rows": 5,
-      "seats_per_row": 2,
-      "layout": "1-1",
-      "total_seats": 10,
-      "available_seats": 10
-    },
-    {
-      "coach_number": "FC2",
-      "coach_class": "First Class",
-      "rows": 5,
-      "seats_per_row": 2,
-      "layout": "1-1",
-      "total_seats": 10,
-      "available_seats": 10
-    },
-    {
-      "coach_number": "BC3",
-      "coach_class": "Business",
-      "rows": 8,
-      "seats_per_row": 3,
-      "layout": "2-1",
-      "total_seats": 24,
-      "available_seats": 24
-    },
-    {
-      "coach_number": "BC4",
-      "coach_class": "Business",
-      "rows": 8,
-      "seats_per_row": 3,
-      "layout": "2-1",
-      "total_seats": 24,
-      "available_seats": 24
-    },
-    {
-      "coach_number": "BC5",
-      "coach_class": "Business",
-      "rows": 8,
-      "seats_per_row": 3,
-      "layout": "2-1",
-      "total_seats": 24,
-      "available_seats": 24
-    },
-    {
-      "coach_number": "EC6",
-      "coach_class": "Economy",
-      "rows": 12,
-      "seats_per_row": 4,
-      "layout": "2-2",
-      "total_seats": 48,
-      "available_seats": 48
-    },
-    {
-      "coach_number": "EC7",
-      "coach_class": "Economy",
-      "rows": 12,
-      "seats_per_row": 4,
-      "layout": "2-2",
-      "total_seats": 48,
-      "available_seats": 48
-    },
-    {
-      "coach_number": "EC8",
-      "coach_class": "Economy",
-      "rows": 12,
-      "seats_per_row": 4,
-      "layout": "2-2",
-      "total_seats": 48,
-      "available_seats": 48
-    },
-    {
-      "coach_number": "EC9",
-      "coach_class": "Economy",
-      "rows": 12,
-      "seats_per_row": 4,
-      "layout": "2-2",
-      "total_seats": 48,
-      "available_seats": 48
-    },
-    {
-      "coach_number": "EC10",
-      "coach_class": "Economy",
-      "rows": 12,
-      "seats_per_row": 4,
-      "layout": "2-2",
-      "total_seats": 48,
-      "available_seats": 48
-    }
-  ],
-  "total_seats": 332,
-  "available_seats": 332
-}
-
-Testing: Get seats in First Class Coach FC1
-URL: GET http://localhost:8090/trains/TRN001/coaches/FC1/seats?travel_date=2025-05-15
-Success! Response:
-[
-  {
-    "seat_id": "1A",
-    "coach_number": "FC1",
-    "coach_class": "First Class",
-    "row_number": 1,
-    "seat_position": "A",
-    "seat_type": "window",
-    "status": "available",
-    "price_adjustment": 15.0,
-    "features": [
-      "extra_legroom",
-      "power_outlet",
-      "usb_port",
-      "adjustable_headrest",
-      "footrest",
-      "personal_screen"
-    ]
-  },
-  {
-    "seat_id": "1B",
-    "coach_number": "FC1",
-    "coach_class": "First Class",
-    "row_number": 1,
-    "seat_position": "B",
-    "seat_type": "window",
-    "status": "available",
-    "price_adjustment": 15.0,
-    "features": [
-      "extra_legroom",
-      "power_outlet",
-      "usb_port",
-      "adjustable_headrest",
-      "footrest",
-      "personal_screen"
-    ]
-  },
-  {
-    "seat_id": "2A",
-    "coach_number": "FC1",
-    "coach_class": "First Class",
-    "row_number": 2,
-    "seat_position": "A",
-    "seat_type": "window",
-    "status": "available",
-    "price_adjustment": 15.0,
-    "features": [
-      "power_outlet",
-      "usb_port",
-      "adjustable_headrest",
-      "footrest",
-      "personal_screen"
-    ]
-  },
-  {
-    "seat_id": "2B",
-    "coach_number": "FC1",
-    "coach_class": "First Class",
-    "row_number": 2,
-    "seat_position": "B",
-    "seat_type": "window",
-    "status": "available",
-    "price_adjustment": 15.0,
-    "features": [
-      "power_outlet",
-      "usb_port",
-      "adjustable_headrest",
-      "footrest",
-      "personal_screen"
-    ]
-  },
-  {
-    "seat_id": "3A",
-    "coach_number": "FC1",
-    "coach_class": "First Class",
-    "row_number": 3,
-    "seat_position": "A",
-    "seat_type": "window",
-    "status": "available",
-    "price_adjustment": 15.0,
-    "features": [
-      "power_outlet",
-      "usb_port",
-      "adjustable_headrest",
-      "footrest",
-      "personal_screen"
-    ]
-  },
-  {
-    "seat_id": "3B",
-    "coach_number": "FC1",
-    "coach_class": "First Class",
-    "row_number": 3,
-    "seat_position": "B",
-    "seat_type": "window",
-    "status": "available",
-    "price_adjustment": 15.0,
-    "features": [
-      "power_outlet",
-      "usb_port",
-      "adjustable_headrest",
-      "footrest",
-      "personal_screen"
-    ]
-  },
-  {
-    "seat_id": "4A",
-    "coach_number": "FC1",
-    "coach_class": "First Class",
-    "row_number": 4,
-    "seat_position": "A",
-    "seat_type": "window",
-    "status": "available",
-    "price_adjustment": 15.0,
-    "features": [
-      "power_outlet",
-      "usb_port",
-      "adjustable_headrest",
-      "footrest",
-      "personal_screen"
-    ]
-  },
-  {
-    "seat_id": "4B",
-    "coach_number": "FC1",
-    "coach_class": "First Class",
-    "row_number": 4,
-    "seat_position": "B",
-    "seat_type": "window",
-    "status": "available",
-    "price_adjustment": 15.0,
-    "features": [
-      "power_outlet",
-      "usb_port",
-      "adjustable_headrest",
-      "footrest",
-      "personal_screen"
-    ]
-  },
-  {
-    "seat_id": "5A",
-    "coach_number": "FC1",
-    "coach_class": "First Class",
-    "row_number": 5,
-    "seat_position": "A",
-    "seat_type": "window",
-    "status": "available",
-    "price_adjustment": 15.0,
-    "features": [
-      "power_outlet",
-      "usb_port",
-      "adjustable_headrest",
-      "footrest",
-      "personal_screen"
-    ]
-  },
-  {
-    "seat_id": "5B",
-    "coach_number": "FC1",
-    "coach_class": "First Class",
-    "row_number": 5,
-    "seat_position": "B",
-    "seat_type": "window",
-    "status": "available",
-    "price_adjustment": 15.0,
-    "features": [
-      "power_outlet",
-      "usb_port",
-      "adjustable_headrest",
-      "footrest",
-      "personal_screen"
-    ]
-  }
-]
-
-Testing: Get First Class coach layout
-URL: GET http://localhost:8090/trains/TRN001/coach-layout/First%20Class
-Success! Response:
-{
-  "coach_class": "First Class",
-  "rows": 5,
-  "seats_per_row": 2,
-  "layout_pattern": "1-1",
-  "visual_layout": [
-    {
-      "row": 1,
-      "seats": [
-        [
-          "1A"
-        ],
-        [
-          "1B"
-        ]
-      ]
-    },
-    {
-      "row": 2,
-      "seats": [
-        [
-          "2A"
-        ],
-        [
-          "2B"
-        ]
-      ]
-    },
-    {
-      "row": 3,
-      "seats": [
-        [
-          "3A"
-        ],
-        [
-          "3B"
-        ]
-      ]
-    },
-    {
-      "row": 4,
-      "seats": [
-        [
-          "4A"
-        ],
-        [
-          "4B"
-        ]
-      ]
-    },
-    {
-      "row": 5,
-      "seats": [
-        [
-          "5A"
-        ],
-        [
-          "5B"
-        ]
-      ]
-    }
-  ]
-}
-
-Testing: Get Business Class coach layout
-URL: GET http://localhost:8090/trains/TRN001/coach-layout/Business
-Success! Response:
-{
-  "coach_class": "Business",
-  "rows": 8,
-  "seats_per_row": 3,
-  "layout_pattern": "2-1",
-  "visual_layout": [
-    {
-      "row": 1,
-      "seats": [
-        [
-          "1A",
-          "1B"
-        ],
-        [
-          "1C"
-        ]
-      ]
-    },
-    {
-      "row": 2,
-      "seats": [
-        [
-          "2A",
-          "2B"
-        ],
-        [
-          "2C"
-        ]
-      ]
-    },
-    {
-      "row": 3,
-      "seats": [
-        [
-          "3A",
-          "3B"
-        ],
-        [
-          "3C"
-        ]
-      ]
-    },
-    {
-      "row": 4,
-      "seats": [
-        [
-          "4A",
-          "4B"
-        ],
-        [
-          "4C"
-        ]
-      ]
-    },
-    {
-      "row": 5,
-      "seats": [
-        [
-          "5A",
-          "5B"
-        ],
-        [
-          "5C"
-        ]
-      ]
-    },
-    {
-      "row": 6,
-      "seats": [
-        [
-          "6A",
-          "6B"
-        ],
-        [
-          "6C"
-        ]
-      ]
-    },
-    {
-      "row": 7,
-      "seats": [
-        [
-          "7A",
-          "7B"
-        ],
-        [
-          "7C"
-        ]
-      ]
-    },
-    {
-      "row": 8,
-      "seats": [
-        [
-          "8A",
-          "8B"
-        ],
-        [
-          "8C"
-        ]
-      ]
-    }
-  ]
-}
-
-Testing: Get Economy Class coach layout
-URL: GET http://localhost:8090/trains/TRN001/coach-layout/Economy
-Success! Response:
-{
-  "coach_class": "Economy",
-  "rows": 12,
-  "seats_per_row": 4,
-  "layout_pattern": "2-2",
-  "visual_layout": [
-    {
-      "row": 1,
-      "seats": [
-        [
-          "1A",
-          "1B"
-        ],
-        [
-          "1C",
-          "1D"
-        ]
-      ]
-    },
-    {
-      "row": 2,
-      "seats": [
-        [
-          "2A",
-          "2B"
-        ],
-        [
-          "2C",
-          "2D"
-        ]
-      ]
-    },
-    {
-      "row": 3,
-      "seats": [
-        [
-          "3A",
-          "3B"
-        ],
-        [
-          "3C",
-          "3D"
-        ]
-      ]
-    },
-    {
-      "row": 4,
-      "seats": [
-        [
-          "4A",
-          "4B"
-        ],
-        [
-          "4C",
-          "4D"
-        ]
-      ]
-    },
-    {
-      "row": 5,
-      "seats": [
-        [
-          "5A",
-          "5B"
-        ],
-        [
-          "5C",
-          "5D"
-        ]
-      ]
-    },
-    {
-      "row": 6,
-      "seats": [
-        [
-          "6A",
-          "6B"
-        ],
-        [
-          "6C",
-          "6D"
-        ]
-      ]
-    },
-    {
-      "row": 7,
-      "seats": [
-        [
-          "7A",
-          "7B"
-        ],
-        [
-          "7C",
-          "7D"
-        ]
-      ]
-    },
-    {
-      "row": 8,
-      "seats": [
-        [
-          "8A",
-          "8B"
-        ],
-        [
-          "8C",
-          "8D"
-        ]
-      ]
-    },
-    {
-      "row": 9,
-      "seats": [
-        [
-          "9A",
-          "9B"
-        ],
-        [
-          "9C",
-          "9D"
-        ]
-      ]
-    },
-    {
-      "row": 10,
-      "seats": [
-        [
-          "10A",
-          "10B"
-        ],
-        [
-          "10C",
-          "10D"
-        ]
-      ]
-    },
-    {
-      "row": 11,
-      "seats": [
-        [
-          "11A",
-          "11B"
-        ],
-        [
-          "11C",
-          "11D"
-        ]
-      ]
-    },
-    {
-      "row": 12,
-      "seats": [
-        [
-          "12A",
-          "12B"
-        ],
-        [
-          "12C",
-          "12D"
-        ]
-      ]
-    }
-  ]
-}
-
-Testing: Get seat availability summary for train
-URL: GET http://localhost:8090/trains/TRN001/availability?travel_date=2025-05-15
-Success! Response:
-{
-  "train_number": "TRN001",
-  "travel_date": "2025-05-15",
-  "total_seats": 332,
-  "available_seats": 332,
-  "availability_by_class": {
-    "First Class": {
-      "total_coaches": 2,
-      "total_seats": 20,
-      "available_seats": 20,
-      "coaches": {
-        "FC1": {
-          "total_seats": 10,
-          "available_seats": 10
-        },
-        "FC2": {
-          "total_seats": 10,
-          "available_seats": 10
-        }
-      }
-    },
-    "Business": {
-      "total_coaches": 3,
-      "total_seats": 72,
-      "available_seats": 72,
-      "coaches": {
-        "BC3": {
-          "total_seats": 24,
-          "available_seats": 24
-        },
-        "BC4": {
-          "total_seats": 24,
-          "available_seats": 24
-        },
-        "BC5": {
-          "total_seats": 24,
-          "available_seats": 24
-        }
-      }
-    },
-    "Economy": {
-      "total_coaches": 5,
-      "total_seats": 240,
-      "available_seats": 240,
-      "coaches": {
-        "EC6": {
-          "total_seats": 48,
-          "available_seats": 48
-        },
-        "EC7": {
-          "total_seats": 48,
-          "available_seats": 48
-        },
-        "EC8": {
-          "total_seats": 48,
-          "available_seats": 48
-        },
-        "EC9": {
-          "total_seats": 48,
-          "available_seats": 48
-        },
-        "EC10": {
-          "total_seats": 48,
-          "available_seats": 48
-        }
-      }
-    }
-  }
-}
-
-Testing: Get seat availability for First Class
-URL: GET http://localhost:8090/trains/TRN001/availability?travel_date=2025-05-15&coach_class=First%20Class
-Success! Response:
-{
-  "train_number": "TRN001",
-  "travel_date": "2025-05-15",
-  "total_seats": 20,
-  "available_seats": 20,
-  "availability_by_class": {
-    "First Class": {
-      "total_coaches": 2,
-      "total_seats": 20,
-      "available_seats": 20,
-      "coaches": {
-        "FC1": {
-          "total_seats": 10,
-          "available_seats": 10
-        },
-        "FC2": {
-          "total_seats": 10,
-          "available_seats": 10
-        }
-      }
-    }
-  }
-}
-
 Testing: Reserve seats for a train booking
 URL: POST http://localhost:8090/seat-reservations
 Payload: {
-    "booking_id": "91feb6bb-3af9-4b31-9971-fe458fbe0463",
+    "booking_id": "bb093949-fe40-47be-8e2e-0ba7a1fcd68b",
     "train_number": "TRN001",
-    "coach_class": "First Class",
-    "passengers": 2,
-    "seat_preferences": ["window", "extra_legroom"],
-    "travel_date": "2025-05-15"
+    "seats": ["FC1-1A", "FC1-1B"],
+    "travel_date": "2025-05-15",
+    "status": "confirmed"
 }
 Success! Response:
 {
-  "booking_id": "91feb6bb-3af9-4b31-9971-fe458fbe0463",
+  "booking_id": "bb093949-fe40-47be-8e2e-0ba7a1fcd68b",
   "train_number": "TRN001",
   "seats": [
     "FC1-1A",
     "FC1-1B"
   ],
-  "travel_date": "2025-05-15"
-}
-Reserved seats: FC1-1A
-FC1-1B
-
-Testing: Get seats reserved for booking
-URL: GET http://localhost:8090/bookings/91feb6bb-3af9-4b31-9971-fe458fbe0463/seats
-Success! Response:
-{
-  "detail": "No seat reservations found for this booking"
+  "travel_date": "2025-05-15",
+  "status": "confirmed"
 }
 
-Testing: Update status of a specific seat to maintenance
-URL: PUT http://localhost:8090/trains/TRN001/seats/FC1-1A/status?status=maintenance&travel_date=2025-05-15
+Testing: Get seat status for booking
+URL: GET http://localhost:8090/bookings/bb093949-fe40-47be-8e2e-0ba7a1fcd68b/seats/status
 Success! Response:
 {
-  "seat_id": "1A",
-  "coach_number": "FC1",
-  "coach_class": "First Class",
-  "row_number": 1,
-  "seat_position": "A",
-  "seat_type": "window",
-  "status": "maintenance",
-  "price_adjustment": 15.0,
-  "features": [
-    "extra_legroom",
-    "power_outlet",
-    "usb_port",
-    "adjustable_headrest",
-    "footrest",
-    "personal_screen"
-  ]
-}
-
-Testing: Get updated seat availability
-URL: GET http://localhost:8090/trains/TRN001/availability?travel_date=2025-05-15
-Success! Response:
-{
+  "booking_id": "bb093949-fe40-47be-8e2e-0ba7a1fcd68b",
   "train_number": "TRN001",
   "travel_date": "2025-05-15",
-  "total_seats": 332,
-  "available_seats": 330,
-  "availability_by_class": {
-    "First Class": {
-      "total_coaches": 2,
-      "total_seats": 20,
-      "available_seats": 18,
-      "coaches": {
-        "FC1": {
-          "total_seats": 10,
-          "available_seats": 8
-        },
-        "FC2": {
-          "total_seats": 10,
-          "available_seats": 10
-        }
-      }
-    },
-    "Business": {
-      "total_coaches": 3,
-      "total_seats": 72,
-      "available_seats": 72,
-      "coaches": {
-        "BC3": {
-          "total_seats": 24,
-          "available_seats": 24
-        },
-        "BC4": {
-          "total_seats": 24,
-          "available_seats": 24
-        },
-        "BC5": {
-          "total_seats": 24,
-          "available_seats": 24
-        }
-      }
-    },
-    "Economy": {
-      "total_coaches": 5,
-      "total_seats": 240,
-      "available_seats": 240,
-      "coaches": {
-        "EC6": {
-          "total_seats": 48,
-          "available_seats": 48
-        },
-        "EC7": {
-          "total_seats": 48,
-          "available_seats": 48
-        },
-        "EC8": {
-          "total_seats": 48,
-          "available_seats": 48
-        },
-        "EC9": {
-          "total_seats": 48,
-          "available_seats": 48
-        },
-        "EC10": {
-          "total_seats": 48,
-          "available_seats": 48
-        }
-      }
-    }
-  }
-}
-
-Testing: Cancel train booking
-URL: PUT http://localhost:8084/train-bookings/91feb6bb-3af9-4b31-9971-fe458fbe0463/cancel
-Success! Response:
-{
-  "message": "Booking cancelled successfully"
+  "seats": [
+    "FC1-1A",
+    "FC1-1B"
+  ],
+  "status": "confirmed"
 }
 
 Testing: Cancel seat reservations
-URL: PUT http://localhost:8090/bookings/91feb6bb-3af9-4b31-9971-fe458fbe0463/seats/cancel
+URL: PUT http://localhost:8090/bookings/bb093949-fe40-47be-8e2e-0ba7a1fcd68b/seats/cancel
 Success! Response:
 {
-  "detail": "No seat reservations found for this booking"
-}
-
-Testing: Search for cancelled train bookings
-URL: GET http://localhost:8084/train-bookings/search?agent_id=1bc6b65e-233c-453c-a916-8763e03e27bd&status=Cancelled
-Success! Response:
-{
-  "detail": [
-    {
-      "type": "uuid_parsing",
-      "loc": [
-        "path",
-        "booking_id"
-      ],
-      "msg": "Input should be a valid UUID, invalid character: expected an optional prefix of `urn:uuid:` followed by [0-9a-fA-F-], found `s` at 1",
-      "input": "search",
-      "ctx": {
-        "error": "invalid character: expected an optional prefix of `urn:uuid:` followed by [0-9a-fA-F-], found `s` at 1"
-      }
-    }
-  ]
-}
-
-Testing: Get seat availability after cancellation
-URL: GET http://localhost:8090/trains/TRN001/availability?travel_date=2025-05-15
-Success! Response:
-{
-  "train_number": "TRN001",
-  "travel_date": "2025-05-15",
-  "total_seats": 332,
-  "available_seats": 330,
-  "availability_by_class": {
-    "First Class": {
-      "total_coaches": 2,
-      "total_seats": 20,
-      "available_seats": 18,
-      "coaches": {
-        "FC1": {
-          "total_seats": 10,
-          "available_seats": 8
-        },
-        "FC2": {
-          "total_seats": 10,
-          "available_seats": 10
-        }
-      }
-    },
-    "Business": {
-      "total_coaches": 3,
-      "total_seats": 72,
-      "available_seats": 72,
-      "coaches": {
-        "BC3": {
-          "total_seats": 24,
-          "available_seats": 24
-        },
-        "BC4": {
-          "total_seats": 24,
-          "available_seats": 24
-        },
-        "BC5": {
-          "total_seats": 24,
-          "available_seats": 24
-        }
-      }
-    },
-    "Economy": {
-      "total_coaches": 5,
-      "total_seats": 240,
-      "available_seats": 240,
-      "coaches": {
-        "EC6": {
-          "total_seats": 48,
-          "available_seats": 48
-        },
-        "EC7": {
-          "total_seats": 48,
-          "available_seats": 48
-        },
-        "EC8": {
-          "total_seats": 48,
-          "available_seats": 48
-        },
-        "EC9": {
-          "total_seats": 48,
-          "available_seats": 48
-        },
-        "EC10": {
-          "total_seats": 48,
-          "available_seats": 48
-        }
-      }
-    }
-  }
+  "message": "Seat reservations cancelled successfully",
+  "booking_id": "bb093949-fe40-47be-8e2e-0ba7a1fcd68b",
+  "status": "cancelled"
 }
 
 === Test Complete ===
 All endpoints have been tested.
 
-Generating PDF report...
-Attempting to generate PDF using Python...
-Python is available but required modules are not installed.
-Install one with: pip install weasyprint or pip install pdfkit
+Generating HTML report...
+HTML report generated successfully: api_test_results.html
 Text report is available at: api_test_results.txt
-HTML report is available at: api_test_results.html
-PDF report is available at: api_test_results.pdf
