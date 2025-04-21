@@ -31,6 +31,7 @@ BOOKING_SERVICE="http://localhost:8001"
 SALES_SERVICE="http://localhost:8002"
 INVOICING_SERVICE="http://localhost:8003"
 TRAIN_BOOKING_SERVICE="http://localhost:8084"  # Port 8084 as specified in docker-compose.yml
+TRAIN_SEAT_STATUS_SERVICE="http://localhost:8090" # Port 8090 for the seat status service
 
 # Function to make API calls and check responses
 call_api() {
@@ -67,6 +68,8 @@ call_api() {
 AGENT_ID=""
 BOOKING_ID=""
 TRAIN_BOOKING_ID=""
+TRAIN_NUMBER="TRN001"
+TRAVEL_DATE="2025-05-15"
 
 log "${BLUE}=== Testing Agent Service ===${NC}"
 
@@ -182,7 +185,7 @@ log "URL: POST ${TRAIN_BOOKING_SERVICE}/train-bookings"
 train_booking_payload='{
     "agent_id": "'$AGENT_ID'",
     "train_number": "TRN001",
-    "travel_date": "2025-05-15",
+    "travel_date": "'$TRAVEL_DATE'",
     "passenger_count": 2,
     "train_class": "First Class",
     "passengers": [
@@ -226,11 +229,80 @@ call_api "GET" "${TRAIN_BOOKING_SERVICE}/train-bookings/${TRAIN_BOOKING_ID}" "" 
 # Get agent's train bookings
 call_api "GET" "${TRAIN_BOOKING_SERVICE}/agents/${AGENT_ID}/train-bookings" "" "Get agent's train bookings"
 
-# Cancel train booking
+# Search train bookings
+call_api "GET" "${TRAIN_BOOKING_SERVICE}/train-bookings/search?agent_id=${AGENT_ID}" "" "Search train bookings by criteria"
+
+log "${BLUE}=== Testing Train Seat Status Service ===${NC}"
+
+# Get train seat map for a specific train on a specific date
+call_api "GET" "${TRAIN_SEAT_STATUS_SERVICE}/trains/${TRAIN_NUMBER}/seats?travel_date=${TRAVEL_DATE}" "" "Get train seat map"
+
+# Get coach seats for a specific coach
+call_api "GET" "${TRAIN_SEAT_STATUS_SERVICE}/trains/${TRAIN_NUMBER}/coaches/FC1/seats?travel_date=${TRAVEL_DATE}" "" "Get seats in First Class Coach FC1"
+
+# Get coach layout for First Class
+call_api "GET" "${TRAIN_SEAT_STATUS_SERVICE}/trains/${TRAIN_NUMBER}/coach-layout/First%20Class" "" "Get First Class coach layout"
+
+# Get coach layout for Business Class
+call_api "GET" "${TRAIN_SEAT_STATUS_SERVICE}/trains/${TRAIN_NUMBER}/coach-layout/Business" "" "Get Business Class coach layout"
+
+# Get coach layout for Economy Class
+call_api "GET" "${TRAIN_SEAT_STATUS_SERVICE}/trains/${TRAIN_NUMBER}/coach-layout/Economy" "" "Get Economy Class coach layout"
+
+# Get seat availability for a train
+call_api "GET" "${TRAIN_SEAT_STATUS_SERVICE}/trains/${TRAIN_NUMBER}/availability?travel_date=${TRAVEL_DATE}" "" "Get seat availability summary for train"
+
+# Get seat availability for a specific class
+call_api "GET" "${TRAIN_SEAT_STATUS_SERVICE}/trains/${TRAIN_NUMBER}/availability?travel_date=${TRAVEL_DATE}&coach_class=First%20Class" "" "Get seat availability for First Class"
+
+# Reserve seats for the train booking
+log "${YELLOW}Testing: Reserve seats for a train booking${NC}"
+log "URL: POST ${TRAIN_SEAT_STATUS_SERVICE}/seat-reservations"
+seat_reservation_payload='{
+    "booking_id": "'$TRAIN_BOOKING_ID'",
+    "train_number": "'$TRAIN_NUMBER'",
+    "coach_class": "First Class",
+    "passengers": 2,
+    "seat_preferences": ["window", "extra_legroom"],
+    "travel_date": "'$TRAVEL_DATE'"
+}'
+log "Payload: $seat_reservation_payload"
+
+seat_reservation_response=$(curl -s -X POST ${TRAIN_SEAT_STATUS_SERVICE}/seat-reservations -H "Content-Type: application/json" -d "$seat_reservation_payload")
+
+# Check response for seat reservation
+if echo "$seat_reservation_response" | jq . >/dev/null 2>&1; then
+    log "${GREEN}Success! Response:${NC}"
+    log "$(echo "$seat_reservation_response" | jq .)"
+    RESERVED_SEATS=$(echo $seat_reservation_response | jq -r '.seats[]')
+    log "Reserved seats: $RESERVED_SEATS"
+else
+    log "${RED}Error: Invalid response${NC}"
+    log "$seat_reservation_response"
+fi
+log ""
+
+# Get the seats reserved for the booking
+call_api "GET" "${TRAIN_SEAT_STATUS_SERVICE}/bookings/${TRAIN_BOOKING_ID}/seats" "" "Get seats reserved for booking"
+
+# Update status of a specific seat (testing the seat update endpoint)
+# Let's select the first coach and first seat as an example
+call_api "PUT" "${TRAIN_SEAT_STATUS_SERVICE}/trains/${TRAIN_NUMBER}/seats/FC1-1A/status?status=maintenance&travel_date=${TRAVEL_DATE}" "" "Update status of a specific seat to maintenance"
+
+# Check the availability again after reservations and status changes
+call_api "GET" "${TRAIN_SEAT_STATUS_SERVICE}/trains/${TRAIN_NUMBER}/availability?travel_date=${TRAVEL_DATE}" "" "Get updated seat availability"
+
+# Cancel a train booking
 call_api "PUT" "${TRAIN_BOOKING_SERVICE}/train-bookings/${TRAIN_BOOKING_ID}/cancel" "" "Cancel train booking"
 
-# Search train bookings
-call_api "GET" "${TRAIN_BOOKING_SERVICE}/train-bookings/search?agent_id=${AGENT_ID}&status=Cancelled" "" "Search train bookings by criteria"
+# Cancel the seat reservation
+call_api "PUT" "${TRAIN_SEAT_STATUS_SERVICE}/bookings/${TRAIN_BOOKING_ID}/seats/cancel" "" "Cancel seat reservations"
+
+# Check for canceled bookings
+call_api "GET" "${TRAIN_BOOKING_SERVICE}/train-bookings/search?agent_id=${AGENT_ID}&status=Cancelled" "" "Search for cancelled train bookings"
+
+# Check availability after cancellation
+call_api "GET" "${TRAIN_SEAT_STATUS_SERVICE}/trains/${TRAIN_NUMBER}/availability?travel_date=${TRAVEL_DATE}" "" "Get seat availability after cancellation"
 
 log "${BLUE}=== Test Complete ===${NC}"
 log "All endpoints have been tested."
