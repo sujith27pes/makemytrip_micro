@@ -41,3 +41,12 @@ services:
     environment:
       - AGENT_SERVICE_URL=http://agent_service:8000
       - BOOKING_SERVICE_URL=http://booking_service:8001
+
+  train_seat_status_service:
+    build: ./train_seat_status_service
+    ports:
+      - "8090:8090"
+    depends_on:
+      - train_booking_service
+    environment:
+      - TRAIN_BOOKING_SERVICE_URL=http://train_booking_service:8084

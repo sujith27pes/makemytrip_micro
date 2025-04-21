@@ -35,7 +35,7 @@
 <div class="content">
 === Travel Agent Management System API Test Script ===
 This script will test all endpoints of your microservices application
-Sun Apr 20 01:20:21 PM IST 2025
+Mon Apr 21 11:04:59 AM IST 2025
 
 === Testing Agent Service ===
 Testing: Create a new agent
@@ -50,294 +50,116 @@ Payload: {
     }
 }
 Success! Response:
-{
-  "id": "65857bea-d6d9-4daf-9b76-19549975564a",
-  "name": "John Smith",
-  "email": "john@example.com",
-  "phone": "123-456-7890",
-  "rating": 0.0,
-  "availability": {
-    "days": [
-      "Monday",
-      "Wednesday",
-      "Friday"
-    ],
-    "shift": "morning"
-  }
-}
-Created agent with ID: 65857bea-d6d9-4daf-9b76-19549975564a
+
+Created agent with ID: 
 
 Testing: List all agents
 URL: GET http://localhost:8000/agents
 Success! Response:
-[
-  {
-    "id": "fd70c492-8608-4bc9-a145-67160ed6908b",
-    "name": "John Smith",
-    "email": "john@example.com",
-    "phone": "123-456-7890",
-    "rating": 0.0,
-    "availability": {
-      "days": [
-        "Tuesday",
-        "Thursday"
-      ],
-      "shift": "evening"
-    }
-  },
-  {
-    "id": "65857bea-d6d9-4daf-9b76-19549975564a",
-    "name": "John Smith",
-    "email": "john@example.com",
-    "phone": "123-456-7890",
-    "rating": 0.0,
-    "availability": {
-      "days": [
-        "Monday",
-        "Wednesday",
-        "Friday"
-      ],
-      "shift": "morning"
-    }
-  }
-]
+
 
 Testing: Get specific agent
-URL: GET http://localhost:8000/agents/65857bea-d6d9-4daf-9b76-19549975564a
+URL: GET http://localhost:8000/agents/
 Success! Response:
-{
-  "id": "65857bea-d6d9-4daf-9b76-19549975564a",
-  "name": "John Smith",
-  "email": "john@example.com",
-  "phone": "123-456-7890",
-  "rating": 0.0,
-  "availability": {
-    "days": [
-      "Monday",
-      "Wednesday",
-      "Friday"
-    ],
-    "shift": "morning"
-  }
-}
+
 
 Testing: Update agent availability
-URL: PUT http://localhost:8000/agents/65857bea-d6d9-4daf-9b76-19549975564a/availability
+URL: PUT http://localhost:8000/agents//availability
 Payload: {
     "days": ["Tuesday", "Thursday"],
     "shift": "evening"
 }
 Success! Response:
-{
-  "days": [
-    "Tuesday",
-    "Thursday"
-  ],
-  "shift": "evening"
-}
+
 
 Testing: Get agent availability
-URL: GET http://localhost:8000/agents/65857bea-d6d9-4daf-9b76-19549975564a/availability
+URL: GET http://localhost:8000/agents//availability
 Success! Response:
-{
-  "days": [
-    "Tuesday",
-    "Thursday"
-  ],
-  "shift": "evening"
-}
+
 
 === Testing Booking Service ===
 Testing: Create a new booking
 URL: POST http://localhost:8001/bookings
 Payload: {
-    "agent_id": "65857bea-d6d9-4daf-9b76-19549975564a",
+    "agent_id": "",
     "customer_name": "Alice Johnson",
     "service_type": "Flight",
     "price": 350.00
 }
 Success! Response:
-{
-  "booking_id": "09768e7c-1c77-4fab-a66a-89799099a81e",
-  "commission_amount": 35.0
-}
-Created booking with ID: 09768e7c-1c77-4fab-a66a-89799099a81e
+
+Created booking with ID: 
 
 Testing: Get agent bookings
-URL: GET http://localhost:8001/agents/65857bea-d6d9-4daf-9b76-19549975564a/bookings
+URL: GET http://localhost:8001/agents//bookings
 Success! Response:
-[
-  {
-    "agent_id": "65857bea-d6d9-4daf-9b76-19549975564a",
-    "customer_name": "Alice Johnson",
-    "service_type": "Flight",
-    "price": 350.0
-  }
-]
+
 
 Testing: Get agent commission
-URL: GET http://localhost:8001/agents/65857bea-d6d9-4daf-9b76-19549975564a/commission
+URL: GET http://localhost:8001/agents//commission
 Success! Response:
-[
-  {
-    "agent_id": "65857bea-d6d9-4daf-9b76-19549975564a",
-    "booking_id": "09768e7c-1c77-4fab-a66a-89799099a81e",
-    "commission_percentage": 10.0,
-    "commission_amount": 35.0
-  }
-]
+
 
 === Testing Sales Service ===
 Testing: Record a sale
 URL: POST http://localhost:8002/sales/record
 Payload: {
-    "agent_id": "65857bea-d6d9-4daf-9b76-19549975564a",
+    "agent_id": "",
     "price": 450.00
 }
 Success! Response:
-{
-  "message": "Sale recorded"
-}
+
 
 Testing: Get sales by agent
-URL: GET http://localhost:8002/sales/by-agent/65857bea-d6d9-4daf-9b76-19549975564a
+URL: GET http://localhost:8002/sales/by-agent/
 Success! Response:
-[
-  {
-    "agent_id": "65857bea-d6d9-4daf-9b76-19549975564a",
-    "sales": 450.0
-  }
-]
+
 
 Testing: Get sales trends
 URL: GET http://localhost:8002/sales/trends
 Success! Response:
-{
-  "trend": "positive",
-  "growth_percentage": 10
-}
+
 
 === Testing Invoicing Service ===
 Testing: Generate an invoice
 URL: POST http://localhost:8003/invoice
 Payload: {
-    "agent_id": "65857bea-d6d9-4daf-9b76-19549975564a",
+    "agent_id": "",
     "customer_name": "Bob Wilson",
     "amount": 550.00
 }
 Success! Response:
-{
-  "invoice_id": "315bc0f2-8fdc-443f-ac00-09f999c2500d",
-  "amount": 550.0
-}
+
 
 Testing: Process agent payout
 URL: POST http://localhost:8003/payout
 Payload: {
-    "agent_id": "65857bea-d6d9-4daf-9b76-19549975564a",
+    "agent_id": "",
     "payout_amount": 220.00
 }
 Success! Response:
-{
-  "payout_id": "5841bb2f-0ea8-44ad-8b0b-37dfa9b9a70e",
-  "amount": 220.0
-}
+
 
 Testing: Get agent payouts
-URL: GET http://localhost:8003/agents/65857bea-d6d9-4daf-9b76-19549975564a/payouts
+URL: GET http://localhost:8003/agents//payouts
 Success! Response:
-[
-  {
-    "agent_id": "65857bea-d6d9-4daf-9b76-19549975564a",
-    "payout_amount": 220.0
-  }
-]
+
 
 === Testing Train Booking Service ===
 Testing: List all trains
 URL: GET http://localhost:8084/trains
 Success! Response:
-[
-  {
-    "train_number": "TRN001",
-    "name": "Express 505",
-    "source": "New York",
-    "destination": "Washington DC",
-    "departure_time": "08:30",
-    "arrival_time": "12:00",
-    "available_classes": [
-      "First Class",
-      "Business",
-      "Economy"
-    ],
-    "base_price": {
-      "First Class": 150.0,
-      "Business": 100.0,
-      "Economy": 50.0
-    }
-  },
-  {
-    "train_number": "TRN002",
-    "name": "Coastal Link",
-    "source": "Boston",
-    "destination": "New York",
-    "departure_time": "10:15",
-    "arrival_time": "13:45",
-    "available_classes": [
-      "First Class",
-      "Economy"
-    ],
-    "base_price": {
-      "First Class": 120.0,
-      "Economy": 45.0
-    }
-  },
-  {
-    "train_number": "TRN003",
-    "name": "Western Eagle",
-    "source": "Chicago",
-    "destination": "Denver",
-    "departure_time": "14:20",
-    "arrival_time": "22:35",
-    "available_classes": [
-      "First Class",
-      "Business",
-      "Economy"
-    ],
-    "base_price": {
-      "First Class": 280.0,
-      "Business": 180.0,
-      "Economy": 120.0
-    }
-  }
-]
+
 
 Testing: Get specific train details
 URL: GET http://localhost:8084/trains/TRN001
 Success! Response:
-{
-  "train_number": "TRN001",
-  "name": "Express 505",
-  "source": "New York",
-  "destination": "Washington DC",
-  "departure_time": "08:30",
-  "arrival_time": "12:00",
-  "available_classes": [
-    "First Class",
-    "Business",
-    "Economy"
-  ],
-  "base_price": {
-    "First Class": 150.0,
-    "Business": 100.0,
-    "Economy": 50.0
-  }
-}
+
 
 Testing: Create a new train booking
 URL: POST http://localhost:8084/train-bookings
 Payload: {
-    "agent_id": "65857bea-d6d9-4daf-9b76-19549975564a",
+    "agent_id": "",
     "train_number": "TRN001",
     "travel_date": "2025-05-15",
     "passenger_count": 2,
@@ -359,178 +181,33 @@ Payload: {
     "special_requests": "Window seats preferred"
 }
 Success! Response:
-{
-  "booking_id": "8c76e17a-b5bf-4747-aecb-728ad4e50f5e",
-  "agent_id": "65857bea-d6d9-4daf-9b76-19549975564a",
-  "train_number": "TRN001",
-  "train_name": "Express 505",
-  "source": "New York",
-  "destination": "Washington DC",
-  "travel_date": "2025-05-15",
-  "departure_time": "08:30",
-  "arrival_time": "12:00",
-  "train_class": "First Class",
-  "price_per_passenger": 150.0,
-  "total_price": 300.0,
-  "passenger_count": 2,
-  "passengers": [
-    {
-      "name": "Jane Smith",
-      "age": 35,
-      "id_type": "Passport",
-      "id_number": "AB123456"
-    },
-    {
-      "name": "David Smith",
-      "age": 40,
-      "id_type": "Passport",
-      "id_number": "CD789012"
-    }
-  ],
-  "special_requests": "Window seats preferred",
-  "booking_date": "2025-04-20",
-  "status": "Confirmed"
-}
-Created train booking with ID: 8c76e17a-b5bf-4747-aecb-728ad4e50f5e
+
+Created train booking with ID: 
 
 Testing: List all train bookings
 URL: GET http://localhost:8084/train-bookings
 Success! Response:
-[
-  {
-    "booking_id": "8c76e17a-b5bf-4747-aecb-728ad4e50f5e",
-    "agent_id": "65857bea-d6d9-4daf-9b76-19549975564a",
-    "train_number": "TRN001",
-    "train_name": "Express 505",
-    "source": "New York",
-    "destination": "Washington DC",
-    "travel_date": "2025-05-15",
-    "departure_time": "08:30",
-    "arrival_time": "12:00",
-    "train_class": "First Class",
-    "price_per_passenger": 150.0,
-    "total_price": 300.0,
-    "passenger_count": 2,
-    "passengers": [
-      {
-        "name": "Jane Smith",
-        "age": 35,
-        "id_type": "Passport",
-        "id_number": "AB123456"
-      },
-      {
-        "name": "David Smith",
-        "age": 40,
-        "id_type": "Passport",
-        "id_number": "CD789012"
-      }
-    ],
-    "special_requests": "Window seats preferred",
-    "booking_date": "2025-04-20",
-    "status": "Confirmed"
-  }
-]
+
 
 Testing: Get specific train booking details
-URL: GET http://localhost:8084/train-bookings/8c76e17a-b5bf-4747-aecb-728ad4e50f5e
+URL: GET http://localhost:8084/train-bookings/
 Success! Response:
-{
-  "booking_id": "8c76e17a-b5bf-4747-aecb-728ad4e50f5e",
-  "agent_id": "65857bea-d6d9-4daf-9b76-19549975564a",
-  "train_number": "TRN001",
-  "train_name": "Express 505",
-  "source": "New York",
-  "destination": "Washington DC",
-  "travel_date": "2025-05-15",
-  "departure_time": "08:30",
-  "arrival_time": "12:00",
-  "train_class": "First Class",
-  "price_per_passenger": 150.0,
-  "total_price": 300.0,
-  "passenger_count": 2,
-  "passengers": [
-    {
-      "name": "Jane Smith",
-      "age": 35,
-      "id_type": "Passport",
-      "id_number": "AB123456"
-    },
-    {
-      "name": "David Smith",
-      "age": 40,
-      "id_type": "Passport",
-      "id_number": "CD789012"
-    }
-  ],
-  "special_requests": "Window seats preferred",
-  "booking_date": "2025-04-20",
-  "status": "Confirmed"
-}
+
 
 Testing: Get agent's train bookings
-URL: GET http://localhost:8084/agents/65857bea-d6d9-4daf-9b76-19549975564a/train-bookings
+URL: GET http://localhost:8084/agents//train-bookings
 Success! Response:
-[
-  {
-    "booking_id": "8c76e17a-b5bf-4747-aecb-728ad4e50f5e",
-    "agent_id": "65857bea-d6d9-4daf-9b76-19549975564a",
-    "train_number": "TRN001",
-    "train_name": "Express 505",
-    "source": "New York",
-    "destination": "Washington DC",
-    "travel_date": "2025-05-15",
-    "departure_time": "08:30",
-    "arrival_time": "12:00",
-    "train_class": "First Class",
-    "price_per_passenger": 150.0,
-    "total_price": 300.0,
-    "passenger_count": 2,
-    "passengers": [
-      {
-        "name": "Jane Smith",
-        "age": 35,
-        "id_type": "Passport",
-        "id_number": "AB123456"
-      },
-      {
-        "name": "David Smith",
-        "age": 40,
-        "id_type": "Passport",
-        "id_number": "CD789012"
-      }
-    ],
-    "special_requests": "Window seats preferred",
-    "booking_date": "2025-04-20",
-    "status": "Confirmed"
-  }
-]
+
 
 Testing: Cancel train booking
-URL: PUT http://localhost:8084/train-bookings/8c76e17a-b5bf-4747-aecb-728ad4e50f5e/cancel
+URL: PUT http://localhost:8084/train-bookings//cancel
 Success! Response:
-{
-  "message": "Booking cancelled successfully"
-}
+
 
 Testing: Search train bookings by criteria
-URL: GET http://localhost:8084/train-bookings/search?agent_id=65857bea-d6d9-4daf-9b76-19549975564a&status=Cancelled
+URL: GET http://localhost:8084/train-bookings/search?agent_id=&status=Cancelled
 Success! Response:
-{
-  "detail": [
-    {
-      "type": "uuid_parsing",
-      "loc": [
-        "path",
-        "booking_id"
-      ],
-      "msg": "Input should be a valid UUID, invalid character: expected an optional prefix of `urn:uuid:` followed by [0-9a-fA-F-], found `s` at 1",
-      "input": "search",
-      "ctx": {
-        "error": "invalid character: expected an optional prefix of `urn:uuid:` followed by [0-9a-fA-F-], found `s` at 1"
-      }
-    }
-  ]
-}
+
 
 === Test Complete ===
 All endpoints have been tested.
