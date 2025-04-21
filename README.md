@@ -70,6 +70,7 @@ The system consists of six integrated microservices:
    ```bash
    git clone https://github.com/sujith27pes/makemytrip_micro.git
    cd makemytrip_micro
+   cd CC_jack
    ```
 
 2. Build and start the services:
