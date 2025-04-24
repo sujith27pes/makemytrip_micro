@@ -1,12 +1,25 @@
 version: '3.8'
 
 services:
+  error_handling_service:
+    build: ./error_handling_service
+    ports:
+      - "8005:8005"
+    depends_on:
+      - agent_service
+      - booking_service
+      - sales_service
+      - invoicing_service
+      - train_booking_service
+      - train_seat_status_service
+
   agent_service:
     build: ./agent_service
     ports:
       - "8000:8000"
     environment:
       - AGENT_SERVICE_URL=http://agent_service:8000
+      - ERROR_HANDLING_SERVICE_URL=http://error_handling_service:8005
 
   booking_service:
     build: ./booking_service
@@ -16,6 +29,7 @@ services:
       - agent_service
     environment:
       - AGENT_SERVICE_URL=http://agent_service:8000
+      - ERROR_HANDLING_SERVICE_URL=http://error_handling_service:8005
 
   sales_service:
     build: ./sales_service
@@ -23,6 +37,8 @@ services:
       - "8002:8002"
     depends_on:
       - booking_service
+    environment:
+      - ERROR_HANDLING_SERVICE_URL=http://error_handling_service:8005
 
   invoicing_service:
     build: ./invoicing_service
@@ -30,6 +46,8 @@ services:
       - "8003:8003"
     depends_on:
       - booking_service
+    environment:
+      - ERROR_HANDLING_SERVICE_URL=http://error_handling_service:8005
 
   train_booking_service:
     build: ./train_booking_service
@@ -41,6 +59,7 @@ services:
     environment:
       - AGENT_SERVICE_URL=http://agent_service:8000
       - BOOKING_SERVICE_URL=http://booking_service:8001
+      - ERROR_HANDLING_SERVICE_URL=http://error_handling_service:8005
 
   train_seat_status_service:
     build: ./train_seat_status_service
@@ -50,3 +69,4 @@ services:
       - train_booking_service
     environment:
       - TRAIN_BOOKING_SERVICE_URL=http://train_booking_service:8084
+      - ERROR_HANDLING_SERVICE_URL=http://error_handling_service:8005

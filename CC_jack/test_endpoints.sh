@@ -32,6 +32,7 @@ SALES_SERVICE="http://localhost:8002"
 INVOICING_SERVICE="http://localhost:8003"
 TRAIN_BOOKING_SERVICE="http://localhost:8084"
 TRAIN_SEAT_STATUS_SERVICE="http://localhost:8090"
+ERROR_HANDLING_SERVICE="http://localhost:8005"
 
 # Function to make API calls and check responses
 call_api() {
@@ -39,18 +40,17 @@ call_api() {
     local url=$2
     local data=$3
     local description=$4
-    
+
     log "${YELLOW}Testing: ${description}${NC}"
     log "URL: ${method} ${url}"
-    
+
     if [ -n "$data" ]; then
         log "Payload: $data"
-        response=$(curl -s -X $method $url -H "Content-Type: application/json" -d "$data")
+        response=$(curl -s -X $method "$url" -H "Content-Type: application/json" -d "$data")
     else
-        response=$(curl -s -X $method $url)
+        response=$(curl -s -X $method "$url")
     fi
-    
-    # Check if the response is valid JSON
+
     if echo "$response" | jq . >/dev/null 2>&1; then
         log "${GREEN}Success! Response:${NC}"
         log "$(echo "$response" | jq .)"
@@ -59,23 +59,18 @@ call_api() {
         log "$response"
     fi
     log ""
-    
-    # Return the response for further processing
+
     echo "$response"
 }
 
-# Store IDs for cross-service testing
 AGENT_ID=""
 BOOKING_ID=""
 TRAIN_BOOKING_ID=""
 TRAIN_NUMBER="TRN001"
 TRAVEL_DATE="2025-05-15"
 
+# Agent Service
 log "${BLUE}=== Testing Agent Service ===${NC}"
-
-# Create an agent
-log "${YELLOW}Testing: Create a new agent${NC}"
-log "URL: POST ${AGENT_SERVICE}/agents"
 payload='{
     "name": "John Smith",
     "email": "john@example.com",
@@ -85,11 +80,11 @@ payload='{
         "shift": "morning"
     }
 }'
+log "${YELLOW}Testing: Create a new agent${NC}"
+log "URL: POST ${AGENT_SERVICE}/agents"
 log "Payload: $payload"
 
 response=$(curl -s -X POST ${AGENT_SERVICE}/agents -H "Content-Type: application/json" -d "$payload")
-
-# Extract agent ID from response
 if echo "$response" | jq . >/dev/null 2>&1; then
     AGENT_ID=$(echo $response | jq -r '.id')
     log "${GREEN}Success! Response:${NC}"
@@ -101,7 +96,6 @@ else
 fi
 log ""
 
-# Test agent service endpoints
 call_api "GET" "${AGENT_SERVICE}/agents" "" "List all agents"
 call_api "GET" "${AGENT_SERVICE}/agents/${AGENT_ID}" "" "Get specific agent"
 call_api "PUT" "${AGENT_SERVICE}/agents/${AGENT_ID}/availability" '{
@@ -110,22 +104,19 @@ call_api "PUT" "${AGENT_SERVICE}/agents/${AGENT_ID}/availability" '{
 }' "Update agent availability"
 call_api "GET" "${AGENT_SERVICE}/agents/${AGENT_ID}/availability" "" "Get agent availability"
 
+# Booking Service
 log "${BLUE}=== Testing Booking Service ===${NC}"
-
-# Create a booking
-log "${YELLOW}Testing: Create a new booking${NC}"
-log "URL: POST ${BOOKING_SERVICE}/bookings"
 payload='{
     "agent_id": "'$AGENT_ID'",
     "customer_name": "Alice Johnson",
     "service_type": "Flight",
     "price": 350.00
 }'
+log "${YELLOW}Testing: Create a new booking${NC}"
+log "URL: POST ${BOOKING_SERVICE}/bookings"
 log "Payload: $payload"
 
 response=$(curl -s -X POST ${BOOKING_SERVICE}/bookings -H "Content-Type: application/json" -d "$payload")
-
-# Extract booking ID from response
 if echo "$response" | jq . >/dev/null 2>&1; then
     BOOKING_ID=$(echo $response | jq -r '.booking_id')
     log "${GREEN}Success! Response:${NC}"
@@ -137,51 +128,35 @@ else
 fi
 log ""
 
-# Test booking service endpoints
 call_api "GET" "${BOOKING_SERVICE}/agents/${AGENT_ID}/bookings" "" "Get agent bookings"
 call_api "GET" "${BOOKING_SERVICE}/agents/${AGENT_ID}/commission" "" "Get agent commission"
 
+# Sales Service
 log "${BLUE}=== Testing Sales Service ===${NC}"
-
-# Record a sale
 call_api "POST" "${SALES_SERVICE}/sales/record" '{
     "agent_id": "'$AGENT_ID'",
     "price": 450.00
 }' "Record a sale"
-
-# Test sales service endpoints
 call_api "GET" "${SALES_SERVICE}/sales/by-agent/${AGENT_ID}" "" "Get sales by agent"
 call_api "GET" "${SALES_SERVICE}/sales/trends" "" "Get sales trends"
 
+# Invoicing Service
 log "${BLUE}=== Testing Invoicing Service ===${NC}"
-
-# Generate an invoice
 call_api "POST" "${INVOICING_SERVICE}/invoice" '{
     "agent_id": "'$AGENT_ID'",
     "customer_name": "Bob Wilson",
     "amount": 550.00
 }' "Generate an invoice"
-
-# Process a payout
 call_api "POST" "${INVOICING_SERVICE}/payout" '{
     "agent_id": "'$AGENT_ID'",
     "payout_amount": 220.00
 }' "Process agent payout"
-
-# Get agent payouts
 call_api "GET" "${INVOICING_SERVICE}/agents/${AGENT_ID}/payouts" "" "Get agent payouts"
 
+# Train Booking Service
 log "${BLUE}=== Testing Train Booking Service ===${NC}"
-
-# Get list of trains
 call_api "GET" "${TRAIN_BOOKING_SERVICE}/trains" "" "List all trains"
-
-# Get specific train details
 call_api "GET" "${TRAIN_BOOKING_SERVICE}/trains/TRN001" "" "Get specific train details"
-
-# Create a train booking
-log "${YELLOW}Testing: Create a new train booking${NC}"
-log "URL: POST ${TRAIN_BOOKING_SERVICE}/train-bookings"
 train_booking_payload='{
     "agent_id": "'$AGENT_ID'",
     "train_number": "TRN001",
@@ -204,11 +179,11 @@ train_booking_payload='{
     ],
     "special_requests": "Window seats preferred"
 }'
+log "${YELLOW}Testing: Create a new train booking${NC}"
+log "URL: POST ${TRAIN_BOOKING_SERVICE}/train-bookings"
 log "Payload: $train_booking_payload"
 
 train_booking_response=$(curl -s -X POST ${TRAIN_BOOKING_SERVICE}/train-bookings -H "Content-Type: application/json" -d "$train_booking_payload")
-
-# Extract train booking ID from response
 if echo "$train_booking_response" | jq . >/dev/null 2>&1; then
     TRAIN_BOOKING_ID=$(echo $train_booking_response | jq -r '.booking_id')
     log "${GREEN}Success! Response:${NC}"
@@ -220,23 +195,12 @@ else
 fi
 log ""
 
-# Get list of all train bookings
 call_api "GET" "${TRAIN_BOOKING_SERVICE}/train-bookings" "" "List all train bookings"
-
-# Get specific train booking
 call_api "GET" "${TRAIN_BOOKING_SERVICE}/train-bookings/${TRAIN_BOOKING_ID}" "" "Get specific train booking details"
-
-# Get agent's train bookings
 call_api "GET" "${TRAIN_BOOKING_SERVICE}/agents/${AGENT_ID}/train-bookings" "" "Get agent's train bookings"
 
-# Search train bookings
-#call_api "GET" "${TRAIN_BOOKING_SERVICE}/train-bookings/search?agent_id=${AGENT_ID}" "" "Search train bookings by criteria"
-
+# Train Seat Status Service
 log "${BLUE}=== Testing Train Seat Status Service ===${NC}"
-
-# Create a seat reservation
-log "${YELLOW}Testing: Reserve seats for a train booking${NC}"
-log "URL: POST ${TRAIN_SEAT_STATUS_SERVICE}/seat-reservations"
 seat_reservation_payload='{
     "booking_id": "'$TRAIN_BOOKING_ID'",
     "train_number": "'$TRAIN_NUMBER'",
@@ -244,11 +208,11 @@ seat_reservation_payload='{
     "travel_date": "'$TRAVEL_DATE'",
     "status": "confirmed"
 }'
+log "${YELLOW}Testing: Reserve seats for a train booking${NC}"
+log "URL: POST ${TRAIN_SEAT_STATUS_SERVICE}/seat-reservations"
 log "Payload: $seat_reservation_payload"
 
 seat_reservation_response=$(curl -s -X POST ${TRAIN_SEAT_STATUS_SERVICE}/seat-reservations -H "Content-Type: application/json" -d "$seat_reservation_payload")
-
-# Check response for seat reservation
 if echo "$seat_reservation_response" | jq . >/dev/null 2>&1; then
     log "${GREEN}Success! Response:${NC}"
     log "$(echo "$seat_reservation_response" | jq .)"
@@ -258,17 +222,49 @@ else
 fi
 log ""
 
-# Get seat status for a booking
 call_api "GET" "${TRAIN_SEAT_STATUS_SERVICE}/bookings/${TRAIN_BOOKING_ID}/seats/status" "" "Get seat status for booking"
-
-# Cancel the seat reservation
 call_api "PUT" "${TRAIN_SEAT_STATUS_SERVICE}/bookings/${TRAIN_BOOKING_ID}/seats/cancel" "" "Cancel seat reservations"
 
-# Cancel a train booking
-#call_api "PUT" "${TRAIN_BOOKING_SERVICE}/train-bookings/${TRAIN_BOOKING_ID}/cancel" "" "Cancel train booking"
+# Error Handling Service (Run last)
+log "${BLUE}=== Testing Error Handling Service ===${NC}"
+call_api "GET" "${ERROR_HANDLING_SERVICE}/registry" "" "Get service registry"
+call_api "POST" "${ERROR_HANDLING_SERVICE}/registry/test_service?url=http://test_service:9999" "" "Register a test service"
+call_api "GET" "${ERROR_HANDLING_SERVICE}/health" "" "Get health status of all services"
+call_api "GET" "${ERROR_HANDLING_SERVICE}/errors" "" "Get error history"
 
-# Check for canceled bookings
-#call_api "GET" "${TRAIN_BOOKING_SERVICE}/train-bookings/search?agent_id=${AGENT_ID}&status=Cancelled" "" "Search for cancelled train bookings"
+call_api "POST" "${ERROR_HANDLING_SERVICE}/proxy" '{
+    "target_service": "agent_service",
+    "endpoint": "agents",
+    "method": "GET",
+    "data": null,
+    "headers": null
+}' "Proxy a request to agent service"
+
+call_api "POST" "${ERROR_HANDLING_SERVICE}/proxy" '{
+    "target_service": "nonexistent_service",
+    "endpoint": "test",
+    "method": "GET",
+    "data": null,
+    "headers": null
+}' "Proxy request to nonexistent service (should generate error)"
+
+call_api "GET" "${ERROR_HANDLING_SERVICE}/health/agent_service" "" "Get health status of agent service"
+call_api "GET" "${ERROR_HANDLING_SERVICE}/health/booking_service" "" "Get health status of booking service"
+call_api "GET" "${ERROR_HANDLING_SERVICE}/health/sales_service" "" "Get health status of sales service"
+call_api "GET" "${ERROR_HANDLING_SERVICE}/health/invoicing_service" "" "Get health status of invoicing service"
+call_api "GET" "${ERROR_HANDLING_SERVICE}/health/train_booking_service" "" "Get health status of train booking service"
+call_api "GET" "${ERROR_HANDLING_SERVICE}/health/train_seat_status_service" "" "Get health status of train seat status service"
+
+call_api "POST" "${ERROR_HANDLING_SERVICE}/proxy" '{
+    "target_service": "agent_service",
+    "endpoint": "agents/00000000-0000-0000-0000-000000000000",
+    "method": "GET",
+    "data": null,
+    "headers": null
+}' "Proxy request to non-existent agent (should log error)"
+
+call_api "GET" "${ERROR_HANDLING_SERVICE}/errors/agent_service" "" "Get errors for agent service"
+call_api "DELETE" "${ERROR_HANDLING_SERVICE}/registry/test_service" "" "Deregister the test service"
 
 log "${BLUE}=== Test Complete ===${NC}"
 log "All endpoints have been tested."
@@ -276,38 +272,18 @@ log "All endpoints have been tested."
 # Generate HTML report
 log "\nGenerating HTML report..."
 
-# Create a basic HTML file from the text output
 cat > "$HTML_OUTPUT" << EOF
 <!DOCTYPE html>
 <html>
 <head>
     <title>API Test Results</title>
     <style>
-        body {
-            font-family: monospace;
-            white-space: pre-wrap;
-            padding: 20px;
-        }
-        .header {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .success {
-            color: green;
-        }
-        .error {
-            color: red;
-        }
-        .test {
-            color: #AA6600;
-        }
-        .section {
-            color: blue;
-            font-weight: bold;
-            margin-top: 15px;
-            margin-bottom: 10px;
-        }
+        body { font-family: monospace; white-space: pre-wrap; padding: 20px; }
+        .header { font-size: 20px; font-weight: bold; margin-bottom: 20px; }
+        .success { color: green; }
+        .error { color: red; }
+        .test { color: #AA6600; }
+        .section { color: blue; font-weight: bold; margin-top: 15px; margin-bottom: 10px; }
     </style>
 </head>
 <body>
