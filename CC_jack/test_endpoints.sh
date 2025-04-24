@@ -225,46 +225,61 @@ log ""
 call_api "GET" "${TRAIN_SEAT_STATUS_SERVICE}/bookings/${TRAIN_BOOKING_ID}/seats/status" "" "Get seat status for booking"
 call_api "PUT" "${TRAIN_SEAT_STATUS_SERVICE}/bookings/${TRAIN_BOOKING_ID}/seats/cancel" "" "Cancel seat reservations"
 
-# Error Handling Service (Run last)
+# Error Handling Service
 log "${BLUE}=== Testing Error Handling Service ===${NC}"
-call_api "GET" "${ERROR_HANDLING_SERVICE}/registry" "" "Get service registry"
-call_api "POST" "${ERROR_HANDLING_SERVICE}/registry/test_service?url=http://test_service:9999" "" "Register a test service"
-call_api "GET" "${ERROR_HANDLING_SERVICE}/health" "" "Get health status of all services"
-call_api "GET" "${ERROR_HANDLING_SERVICE}/errors" "" "Get error history"
 
+# Check what services are currently registered in the error handler's service registry
+call_api "GET" "${ERROR_HANDLING_SERVICE}/registry" "" "Retrieve service registry (list of registered services)"
+
+# Simulate registration of a new dummy service for testing purposes
+call_api "POST" "${ERROR_HANDLING_SERVICE}/registry/test_service?url=http://test_service:9999" "" "Register a new test service"
+
+# Retrieve health status of all services collectively
+call_api "GET" "${ERROR_HANDLING_SERVICE}/health" "" "Fetch overall health status of all services"
+
+# Retrieve log/history of all previously reported errors
+call_api "GET" "${ERROR_HANDLING_SERVICE}/errors" "" "Retrieve historical error logs"
+
+# Test proxy functionality to make a GET request to the agent service via error handler
 call_api "POST" "${ERROR_HANDLING_SERVICE}/proxy" '{
     "target_service": "agent_service",
     "endpoint": "agents",
     "method": "GET",
     "data": null,
     "headers": null
-}' "Proxy a request to agent service"
+}' "Proxy request to agent_service to fetch agent list"
 
+# Send a request to a non-existent service to simulate and log an error
 call_api "POST" "${ERROR_HANDLING_SERVICE}/proxy" '{
     "target_service": "nonexistent_service",
     "endpoint": "test",
     "method": "GET",
     "data": null,
     "headers": null
-}' "Proxy request to nonexistent service (should generate error)"
+}' "Simulate proxy request to a nonexistent service (should generate error log)"
 
-call_api "GET" "${ERROR_HANDLING_SERVICE}/health/agent_service" "" "Get health status of agent service"
-call_api "GET" "${ERROR_HANDLING_SERVICE}/health/booking_service" "" "Get health status of booking service"
-call_api "GET" "${ERROR_HANDLING_SERVICE}/health/sales_service" "" "Get health status of sales service"
-call_api "GET" "${ERROR_HANDLING_SERVICE}/health/invoicing_service" "" "Get health status of invoicing service"
-call_api "GET" "${ERROR_HANDLING_SERVICE}/health/train_booking_service" "" "Get health status of train booking service"
-call_api "GET" "${ERROR_HANDLING_SERVICE}/health/train_seat_status_service" "" "Get health status of train seat status service"
+# Fetch health info for each service individually
+call_api "GET" "${ERROR_HANDLING_SERVICE}/health/agent_service" "" "Check health status of agent service"
+call_api "GET" "${ERROR_HANDLING_SERVICE}/health/booking_service" "" "Check health status of booking service"
+call_api "GET" "${ERROR_HANDLING_SERVICE}/health/sales_service" "" "Check health status of sales service"
+call_api "GET" "${ERROR_HANDLING_SERVICE}/health/invoicing_service" "" "Check health status of invoicing service"
+call_api "GET" "${ERROR_HANDLING_SERVICE}/health/train_booking_service" "" "Check health status of train booking service"
+call_api "GET" "${ERROR_HANDLING_SERVICE}/health/train_seat_status_service" "" "Check health status of train seat status service"
 
+# Try fetching details of a non-existent agent to simulate and log a 404 or related error
 call_api "POST" "${ERROR_HANDLING_SERVICE}/proxy" '{
     "target_service": "agent_service",
     "endpoint": "agents/00000000-0000-0000-0000-000000000000",
     "method": "GET",
     "data": null,
     "headers": null
-}' "Proxy request to non-existent agent (should log error)"
+}' "Proxy request for non-existent agent to generate error entry"
 
-call_api "GET" "${ERROR_HANDLING_SERVICE}/errors/agent_service" "" "Get errors for agent service"
-call_api "DELETE" "${ERROR_HANDLING_SERVICE}/registry/test_service" "" "Deregister the test service"
+# Check only errors related to agent_service
+call_api "GET" "${ERROR_HANDLING_SERVICE}/errors/agent_service" "" "Get logged errors specific to agent service"
+
+# Deregister the dummy test service
+call_api "DELETE" "${ERROR_HANDLING_SERVICE}/registry/test_service" "" "Remove test_service from registry"
 
 log "${BLUE}=== Test Complete ===${NC}"
 log "All endpoints have been tested."
