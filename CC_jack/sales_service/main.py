@@ -3,6 +3,18 @@ from typing import Dict
 from pydantic import BaseModel
 
 app = FastAPI()
+@app.get("/")
+def read_root():
+    """Root endpoint for health checks"""
+    return {
+        "service": "Agent Service",
+        "status": "running",
+        "endpoints": [
+            "/agents",
+            "/agents/{agent_id}",
+            "/agents/{agent_id}/availability"
+        ]
+    }
 
 # In-memory sales store
 sales_data: Dict[str, float] = {}

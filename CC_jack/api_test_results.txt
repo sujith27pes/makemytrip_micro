@@ -1,6 +1,6 @@
 === Travel Agent Management System API Test Script ===
 This script will test all existing endpoints of your microservices application
-Thu Apr 24 20:16:53 IST 2025
+Fri Apr 25 12:14:36 PM IST 2025
 
 === Testing Agent Service ===
 Testing: Create a new agent
@@ -16,7 +16,7 @@ Payload: {
 }
 Success! Response:
 {
-  "id": "835f06b2-5b08-4b69-ac70-b2bb105896f3",
+  "id": "bf1663d6-d2b7-43a9-969c-efbfca033ba0",
   "name": "John Smith",
   "email": "john@example.com",
   "phone": "123-456-7890",
@@ -30,56 +30,14 @@ Success! Response:
     "shift": "morning"
   }
 }
-Created agent with ID: 835f06b2-5b08-4b69-ac70-b2bb105896f3
+Created agent with ID: bf1663d6-d2b7-43a9-969c-efbfca033ba0
 
 Testing: List all agents
 URL: GET http://localhost:8000/agents
 Success! Response:
 [
   {
-    "id": "93914a93-f8ea-4783-abda-36a923ae2ada",
-    "name": "John Smith",
-    "email": "john@example.com",
-    "phone": "123-456-7890",
-    "rating": 0.0,
-    "availability": {
-      "days": [
-        "Tuesday",
-        "Thursday"
-      ],
-      "shift": "evening"
-    }
-  },
-  {
-    "id": "d6cbe9b9-76ef-4bda-8bb9-3326de9bc318",
-    "name": "John Smith",
-    "email": "john@example.com",
-    "phone": "123-456-7890",
-    "rating": 0.0,
-    "availability": {
-      "days": [
-        "Tuesday",
-        "Thursday"
-      ],
-      "shift": "evening"
-    }
-  },
-  {
-    "id": "4ac6f8ae-82eb-4ebd-90e4-cf256cf7c140",
-    "name": "John Smith",
-    "email": "john@example.com",
-    "phone": "123-456-7890",
-    "rating": 0.0,
-    "availability": {
-      "days": [
-        "Tuesday",
-        "Thursday"
-      ],
-      "shift": "evening"
-    }
-  },
-  {
-    "id": "835f06b2-5b08-4b69-ac70-b2bb105896f3",
+    "id": "bf1663d6-d2b7-43a9-969c-efbfca033ba0",
     "name": "John Smith",
     "email": "john@example.com",
     "phone": "123-456-7890",
@@ -96,10 +54,10 @@ Success! Response:
 ]
 
 Testing: Get specific agent
-URL: GET http://localhost:8000/agents/835f06b2-5b08-4b69-ac70-b2bb105896f3
+URL: GET http://localhost:8000/agents/bf1663d6-d2b7-43a9-969c-efbfca033ba0
 Success! Response:
 {
-  "id": "835f06b2-5b08-4b69-ac70-b2bb105896f3",
+  "id": "bf1663d6-d2b7-43a9-969c-efbfca033ba0",
   "name": "John Smith",
   "email": "john@example.com",
   "phone": "123-456-7890",
@@ -115,7 +73,7 @@ Success! Response:
 }
 
 Testing: Update agent availability
-URL: PUT http://localhost:8000/agents/835f06b2-5b08-4b69-ac70-b2bb105896f3/availability
+URL: PUT http://localhost:8000/agents/bf1663d6-d2b7-43a9-969c-efbfca033ba0/availability
 Payload: {
     "days": ["Tuesday", "Thursday"],
     "shift": "evening"
@@ -130,7 +88,7 @@ Success! Response:
 }
 
 Testing: Get agent availability
-URL: GET http://localhost:8000/agents/835f06b2-5b08-4b69-ac70-b2bb105896f3/availability
+URL: GET http://localhost:8000/agents/bf1663d6-d2b7-43a9-969c-efbfca033ba0/availability
 Success! Response:
 {
   "days": [
@@ -144,24 +102,24 @@ Success! Response:
 Testing: Create a new booking
 URL: POST http://localhost:8001/bookings
 Payload: {
-    "agent_id": "835f06b2-5b08-4b69-ac70-b2bb105896f3",
+    "agent_id": "bf1663d6-d2b7-43a9-969c-efbfca033ba0",
     "customer_name": "Alice Johnson",
     "service_type": "Flight",
     "price": 350.00
 }
 Success! Response:
 {
-  "booking_id": "f50cb979-edac-42d5-a198-d240ec0273a0",
+  "booking_id": "8f1996a4-b992-4110-9f8e-700990fa0781",
   "commission_amount": 35.0
 }
-Created booking with ID: f50cb979-edac-42d5-a198-d240ec0273a0
+Created booking with ID: 8f1996a4-b992-4110-9f8e-700990fa0781
 
 Testing: Get agent bookings
-URL: GET http://localhost:8001/agents/835f06b2-5b08-4b69-ac70-b2bb105896f3/bookings
+URL: GET http://localhost:8001/agents/bf1663d6-d2b7-43a9-969c-efbfca033ba0/bookings
 Success! Response:
 [
   {
-    "agent_id": "835f06b2-5b08-4b69-ac70-b2bb105896f3",
+    "agent_id": "bf1663d6-d2b7-43a9-969c-efbfca033ba0",
     "customer_name": "Alice Johnson",
     "service_type": "Flight",
     "price": 350.0
@@ -169,12 +127,12 @@ Success! Response:
 ]
 
 Testing: Get agent commission
-URL: GET http://localhost:8001/agents/835f06b2-5b08-4b69-ac70-b2bb105896f3/commission
+URL: GET http://localhost:8001/agents/bf1663d6-d2b7-43a9-969c-efbfca033ba0/commission
 Success! Response:
 [
   {
-    "agent_id": "835f06b2-5b08-4b69-ac70-b2bb105896f3",
-    "booking_id": "f50cb979-edac-42d5-a198-d240ec0273a0",
+    "agent_id": "bf1663d6-d2b7-43a9-969c-efbfca033ba0",
+    "booking_id": "8f1996a4-b992-4110-9f8e-700990fa0781",
     "commission_percentage": 10.0,
     "commission_amount": 35.0
   }
@@ -184,7 +142,7 @@ Success! Response:
 Testing: Record a sale
 URL: POST http://localhost:8002/sales/record
 Payload: {
-    "agent_id": "835f06b2-5b08-4b69-ac70-b2bb105896f3",
+    "agent_id": "bf1663d6-d2b7-43a9-969c-efbfca033ba0",
     "price": 450.00
 }
 Success! Response:
@@ -193,11 +151,11 @@ Success! Response:
 }
 
 Testing: Get sales by agent
-URL: GET http://localhost:8002/sales/by-agent/835f06b2-5b08-4b69-ac70-b2bb105896f3
+URL: GET http://localhost:8002/sales/by-agent/bf1663d6-d2b7-43a9-969c-efbfca033ba0
 Success! Response:
 [
   {
-    "agent_id": "835f06b2-5b08-4b69-ac70-b2bb105896f3",
+    "agent_id": "bf1663d6-d2b7-43a9-969c-efbfca033ba0",
     "sales": 450.0
   }
 ]
@@ -214,34 +172,34 @@ Success! Response:
 Testing: Generate an invoice
 URL: POST http://localhost:8003/invoice
 Payload: {
-    "agent_id": "835f06b2-5b08-4b69-ac70-b2bb105896f3",
+    "agent_id": "bf1663d6-d2b7-43a9-969c-efbfca033ba0",
     "customer_name": "Bob Wilson",
     "amount": 550.00
 }
 Success! Response:
 {
-  "invoice_id": "e54a06b2-0fb3-4467-9c19-1e7023084392",
+  "invoice_id": "0be9b268-2171-41db-940d-4983622fd680",
   "amount": 550.0
 }
 
 Testing: Process agent payout
 URL: POST http://localhost:8003/payout
 Payload: {
-    "agent_id": "835f06b2-5b08-4b69-ac70-b2bb105896f3",
+    "agent_id": "bf1663d6-d2b7-43a9-969c-efbfca033ba0",
     "payout_amount": 220.00
 }
 Success! Response:
 {
-  "payout_id": "6716a1b4-49e4-4531-b2d3-388f1970186e",
+  "payout_id": "3b5f8d6f-45e5-4af7-8eb9-87fbf3f45b5b",
   "amount": 220.0
 }
 
 Testing: Get agent payouts
-URL: GET http://localhost:8003/agents/835f06b2-5b08-4b69-ac70-b2bb105896f3/payouts
+URL: GET http://localhost:8003/agents/bf1663d6-d2b7-43a9-969c-efbfca033ba0/payouts
 Success! Response:
 [
   {
-    "agent_id": "835f06b2-5b08-4b69-ac70-b2bb105896f3",
+    "agent_id": "bf1663d6-d2b7-43a9-969c-efbfca033ba0",
     "payout_amount": 220.0
   }
 ]
@@ -330,7 +288,7 @@ Success! Response:
 Testing: Create a new train booking
 URL: POST http://localhost:8084/train-bookings
 Payload: {
-    "agent_id": "835f06b2-5b08-4b69-ac70-b2bb105896f3",
+    "agent_id": "bf1663d6-d2b7-43a9-969c-efbfca033ba0",
     "train_number": "TRN001",
     "travel_date": "2025-05-15",
     "passenger_count": 2,
@@ -353,8 +311,8 @@ Payload: {
 }
 Success! Response:
 {
-  "booking_id": "c8edbb22-5198-49ef-a04c-fac1d0d1de0d",
-  "agent_id": "835f06b2-5b08-4b69-ac70-b2bb105896f3",
+  "booking_id": "16be7a31-b5ad-473d-8548-ba3313abcd0d",
+  "agent_id": "bf1663d6-d2b7-43a9-969c-efbfca033ba0",
   "train_number": "TRN001",
   "train_name": "Express 505",
   "source": "New York",
@@ -381,18 +339,18 @@ Success! Response:
     }
   ],
   "special_requests": "Window seats preferred",
-  "booking_date": "2025-04-24",
+  "booking_date": "2025-04-25",
   "status": "Confirmed"
 }
-Created train booking with ID: c8edbb22-5198-49ef-a04c-fac1d0d1de0d
+Created train booking with ID: 16be7a31-b5ad-473d-8548-ba3313abcd0d
 
 Testing: List all train bookings
 URL: GET http://localhost:8084/train-bookings
 Success! Response:
 [
   {
-    "booking_id": "383631fb-6d97-478a-9fd4-eb404b232391",
-    "agent_id": "93914a93-f8ea-4783-abda-36a923ae2ada",
+    "booking_id": "16be7a31-b5ad-473d-8548-ba3313abcd0d",
+    "agent_id": "bf1663d6-d2b7-43a9-969c-efbfca033ba0",
     "train_number": "TRN001",
     "train_name": "Express 505",
     "source": "New York",
@@ -419,113 +377,17 @@ Success! Response:
       }
     ],
     "special_requests": "Window seats preferred",
-    "booking_date": "2025-04-24",
-    "status": "Cancelled"
-  },
-  {
-    "booking_id": "387d37f4-2a60-4205-88a6-c2bf005b4f47",
-    "agent_id": "d6cbe9b9-76ef-4bda-8bb9-3326de9bc318",
-    "train_number": "TRN001",
-    "train_name": "Express 505",
-    "source": "New York",
-    "destination": "Washington DC",
-    "travel_date": "2025-05-15",
-    "departure_time": "08:30",
-    "arrival_time": "12:00",
-    "train_class": "First Class",
-    "price_per_passenger": 150.0,
-    "total_price": 300.0,
-    "passenger_count": 2,
-    "passengers": [
-      {
-        "name": "Jane Smith",
-        "age": 35,
-        "id_type": "Passport",
-        "id_number": "AB123456"
-      },
-      {
-        "name": "David Smith",
-        "age": 40,
-        "id_type": "Passport",
-        "id_number": "CD789012"
-      }
-    ],
-    "special_requests": "Window seats preferred",
-    "booking_date": "2025-04-24",
-    "status": "Cancelled"
-  },
-  {
-    "booking_id": "5c8bc36b-cd8c-408c-aa73-fa5699117c40",
-    "agent_id": "4ac6f8ae-82eb-4ebd-90e4-cf256cf7c140",
-    "train_number": "TRN001",
-    "train_name": "Express 505",
-    "source": "New York",
-    "destination": "Washington DC",
-    "travel_date": "2025-05-15",
-    "departure_time": "08:30",
-    "arrival_time": "12:00",
-    "train_class": "First Class",
-    "price_per_passenger": 150.0,
-    "total_price": 300.0,
-    "passenger_count": 2,
-    "passengers": [
-      {
-        "name": "Jane Smith",
-        "age": 35,
-        "id_type": "Passport",
-        "id_number": "AB123456"
-      },
-      {
-        "name": "David Smith",
-        "age": 40,
-        "id_type": "Passport",
-        "id_number": "CD789012"
-      }
-    ],
-    "special_requests": "Window seats preferred",
-    "booking_date": "2025-04-24",
-    "status": "Cancelled"
-  },
-  {
-    "booking_id": "c8edbb22-5198-49ef-a04c-fac1d0d1de0d",
-    "agent_id": "835f06b2-5b08-4b69-ac70-b2bb105896f3",
-    "train_number": "TRN001",
-    "train_name": "Express 505",
-    "source": "New York",
-    "destination": "Washington DC",
-    "travel_date": "2025-05-15",
-    "departure_time": "08:30",
-    "arrival_time": "12:00",
-    "train_class": "First Class",
-    "price_per_passenger": 150.0,
-    "total_price": 300.0,
-    "passenger_count": 2,
-    "passengers": [
-      {
-        "name": "Jane Smith",
-        "age": 35,
-        "id_type": "Passport",
-        "id_number": "AB123456"
-      },
-      {
-        "name": "David Smith",
-        "age": 40,
-        "id_type": "Passport",
-        "id_number": "CD789012"
-      }
-    ],
-    "special_requests": "Window seats preferred",
-    "booking_date": "2025-04-24",
+    "booking_date": "2025-04-25",
     "status": "Confirmed"
   }
 ]
 
 Testing: Get specific train booking details
-URL: GET http://localhost:8084/train-bookings/c8edbb22-5198-49ef-a04c-fac1d0d1de0d
+URL: GET http://localhost:8084/train-bookings/16be7a31-b5ad-473d-8548-ba3313abcd0d
 Success! Response:
 {
-  "booking_id": "c8edbb22-5198-49ef-a04c-fac1d0d1de0d",
-  "agent_id": "835f06b2-5b08-4b69-ac70-b2bb105896f3",
+  "booking_id": "16be7a31-b5ad-473d-8548-ba3313abcd0d",
+  "agent_id": "bf1663d6-d2b7-43a9-969c-efbfca033ba0",
   "train_number": "TRN001",
   "train_name": "Express 505",
   "source": "New York",
@@ -552,17 +414,17 @@ Success! Response:
     }
   ],
   "special_requests": "Window seats preferred",
-  "booking_date": "2025-04-24",
+  "booking_date": "2025-04-25",
   "status": "Confirmed"
 }
 
 Testing: Get agent's train bookings
-URL: GET http://localhost:8084/agents/835f06b2-5b08-4b69-ac70-b2bb105896f3/train-bookings
+URL: GET http://localhost:8084/agents/bf1663d6-d2b7-43a9-969c-efbfca033ba0/train-bookings
 Success! Response:
 [
   {
-    "booking_id": "c8edbb22-5198-49ef-a04c-fac1d0d1de0d",
-    "agent_id": "835f06b2-5b08-4b69-ac70-b2bb105896f3",
+    "booking_id": "16be7a31-b5ad-473d-8548-ba3313abcd0d",
+    "agent_id": "bf1663d6-d2b7-43a9-969c-efbfca033ba0",
     "train_number": "TRN001",
     "train_name": "Express 505",
     "source": "New York",
@@ -589,7 +451,7 @@ Success! Response:
       }
     ],
     "special_requests": "Window seats preferred",
-    "booking_date": "2025-04-24",
+    "booking_date": "2025-04-25",
     "status": "Confirmed"
   }
 ]
@@ -598,7 +460,7 @@ Success! Response:
 Testing: Reserve seats for a train booking
 URL: POST http://localhost:8090/seat-reservations
 Payload: {
-    "booking_id": "c8edbb22-5198-49ef-a04c-fac1d0d1de0d",
+    "booking_id": "16be7a31-b5ad-473d-8548-ba3313abcd0d",
     "train_number": "TRN001",
     "seats": ["FC1-1A", "FC1-1B"],
     "travel_date": "2025-05-15",
@@ -606,7 +468,7 @@ Payload: {
 }
 Success! Response:
 {
-  "booking_id": "c8edbb22-5198-49ef-a04c-fac1d0d1de0d",
+  "booking_id": "16be7a31-b5ad-473d-8548-ba3313abcd0d",
   "train_number": "TRN001",
   "seats": [
     "FC1-1A",
@@ -617,10 +479,10 @@ Success! Response:
 }
 
 Testing: Get seat status for booking
-URL: GET http://localhost:8090/bookings/c8edbb22-5198-49ef-a04c-fac1d0d1de0d/seats/status
+URL: GET http://localhost:8090/bookings/16be7a31-b5ad-473d-8548-ba3313abcd0d/seats/status
 Success! Response:
 {
-  "booking_id": "c8edbb22-5198-49ef-a04c-fac1d0d1de0d",
+  "booking_id": "16be7a31-b5ad-473d-8548-ba3313abcd0d",
   "train_number": "TRN001",
   "travel_date": "2025-05-15",
   "seats": [
@@ -631,11 +493,11 @@ Success! Response:
 }
 
 Testing: Cancel seat reservations
-URL: PUT http://localhost:8090/bookings/c8edbb22-5198-49ef-a04c-fac1d0d1de0d/seats/cancel
+URL: PUT http://localhost:8090/bookings/16be7a31-b5ad-473d-8548-ba3313abcd0d/seats/cancel
 Success! Response:
 {
   "message": "Seat reservations cancelled successfully",
-  "booking_id": "c8edbb22-5198-49ef-a04c-fac1d0d1de0d",
+  "booking_id": "16be7a31-b5ad-473d-8548-ba3313abcd0d",
   "status": "cancelled"
 }
 
@@ -663,52 +525,52 @@ Testing: Fetch overall health status of all services
 URL: GET http://localhost:8005/health
 Success! Response:
 {
-  "booking_service": {
-    "service_name": "booking_service",
-    "status": "degraded",
-    "last_checked": "2025-04-24T14:46:54.945084",
-    "response_time": 112.0760440826416,
-    "endpoint": "http://booking_service:8001/"
-  },
-  "agent_service": {
-    "service_name": "agent_service",
-    "status": "degraded",
-    "last_checked": "2025-04-24T14:46:54.946486",
-    "response_time": 136.000394821167,
-    "endpoint": "http://agent_service:8000/"
-  },
   "sales_service": {
     "service_name": "sales_service",
-    "status": "degraded",
-    "last_checked": "2025-04-24T14:46:54.946474",
-    "response_time": 95.49403190612793,
+    "status": "up",
+    "last_checked": "2025-04-25T06:44:38.500573",
+    "response_time": 206.03489875793457,
     "endpoint": "http://sales_service:8002/"
-  },
-  "train_booking_service": {
-    "service_name": "train_booking_service",
-    "status": "degraded",
-    "last_checked": "2025-04-24T14:46:54.946495",
-    "response_time": 63.576698303222656,
-    "endpoint": "http://train_booking_service:8084/"
   },
   "invoicing_service": {
     "service_name": "invoicing_service",
-    "status": "degraded",
-    "last_checked": "2025-04-24T14:46:54.946456",
-    "response_time": 79.25200462341309,
+    "status": "up",
+    "last_checked": "2025-04-25T06:44:38.501518",
+    "response_time": 169.5547103881836,
     "endpoint": "http://invoicing_service:8003/"
+  },
+  "agent_service": {
+    "service_name": "agent_service",
+    "status": "up",
+    "last_checked": "2025-04-25T06:44:38.500647",
+    "response_time": 286.022424697876,
+    "endpoint": "http://agent_service:8000/"
+  },
+  "booking_service": {
+    "service_name": "booking_service",
+    "status": "up",
+    "last_checked": "2025-04-25T06:44:38.497517",
+    "response_time": 243.18957328796387,
+    "endpoint": "http://booking_service:8001/"
   },
   "train_seat_status_service": {
     "service_name": "train_seat_status_service",
-    "status": "degraded",
-    "last_checked": "2025-04-24T14:46:54.946068",
-    "response_time": 47.334909439086914,
+    "status": "up",
+    "last_checked": "2025-04-25T06:44:38.500683",
+    "response_time": 93.62339973449707,
     "endpoint": "http://train_seat_status_service:8090/"
+  },
+  "train_booking_service": {
+    "service_name": "train_booking_service",
+    "status": "up",
+    "last_checked": "2025-04-25T06:44:38.500716",
+    "response_time": 130.7685375213623,
+    "endpoint": "http://train_booking_service:8084/"
   },
   "test_service": {
     "service_name": "test_service",
     "status": "down",
-    "last_checked": "2025-04-24T14:46:54.955518",
+    "last_checked": "2025-04-25T06:44:38.621344",
     "response_time": 0.0,
     "endpoint": "http://test_service:9999/"
   }
@@ -719,54 +581,7 @@ URL: GET http://localhost:8005/errors
 Success! Response:
 [
   {
-    "timestamp": "2025-04-24T14:03:16.320479",
-    "service_name": "agent_service",
-    "endpoint": "agents/00000000-0000-0000-0000-000000000000",
-    "status_code": 404,
-    "error_message": "{\"detail\":\"Agent not found\"}",
-    "request_details": {
-      "method": "GET",
-      "url": "http://agent_service:8000/agents/00000000-0000-0000-0000-000000000000",
-      "data": null,
-      "headers": null
-    }
-  },
-  {
-    "timestamp": "2025-04-24T14:21:07.995297",
-    "service_name": "agent_service",
-    "endpoint": "agents/00000000-0000-0000-0000-000000000000",
-    "status_code": 404,
-    "error_message": "{\"detail\":\"Agent not found\"}",
-    "request_details": {
-      "method": "GET",
-      "url": "http://agent_service:8000/agents/00000000-0000-0000-0000-000000000000",
-      "data": null,
-      "headers": null
-    }
-  },
-  {
-    "timestamp": "2025-04-24T14:29:13.738806",
-    "service_name": "test_service",
-    "endpoint": "http://test_service:9999/",
-    "status_code": 503,
-    "error_message": "[Errno -2] Name or service not known",
-    "request_details": null
-  },
-  {
-    "timestamp": "2025-04-24T14:29:14.176542",
-    "service_name": "agent_service",
-    "endpoint": "agents/00000000-0000-0000-0000-000000000000",
-    "status_code": 404,
-    "error_message": "{\"detail\":\"Agent not found\"}",
-    "request_details": {
-      "method": "GET",
-      "url": "http://agent_service:8000/agents/00000000-0000-0000-0000-000000000000",
-      "data": null,
-      "headers": null
-    }
-  },
-  {
-    "timestamp": "2025-04-24T14:46:54.955760",
+    "timestamp": "2025-04-25T06:44:38.621383",
     "service_name": "test_service",
     "endpoint": "http://test_service:9999/",
     "status_code": 503,
@@ -788,56 +603,14 @@ Success! Response:
 {
   "status_code": 200,
   "headers": {
-    "date": "Thu, 24 Apr 2025 14:46:54 GMT",
+    "date": "Fri, 25 Apr 2025 06:44:37 GMT",
     "server": "uvicorn",
-    "content-length": "777",
+    "content-length": "195",
     "content-type": "application/json"
   },
   "data": [
     {
-      "id": "93914a93-f8ea-4783-abda-36a923ae2ada",
-      "name": "John Smith",
-      "email": "john@example.com",
-      "phone": "123-456-7890",
-      "rating": 0.0,
-      "availability": {
-        "days": [
-          "Tuesday",
-          "Thursday"
-        ],
-        "shift": "evening"
-      }
-    },
-    {
-      "id": "d6cbe9b9-76ef-4bda-8bb9-3326de9bc318",
-      "name": "John Smith",
-      "email": "john@example.com",
-      "phone": "123-456-7890",
-      "rating": 0.0,
-      "availability": {
-        "days": [
-          "Tuesday",
-          "Thursday"
-        ],
-        "shift": "evening"
-      }
-    },
-    {
-      "id": "4ac6f8ae-82eb-4ebd-90e4-cf256cf7c140",
-      "name": "John Smith",
-      "email": "john@example.com",
-      "phone": "123-456-7890",
-      "rating": 0.0,
-      "availability": {
-        "days": [
-          "Tuesday",
-          "Thursday"
-        ],
-        "shift": "evening"
-      }
-    },
-    {
-      "id": "835f06b2-5b08-4b69-ac70-b2bb105896f3",
+      "id": "bf1663d6-d2b7-43a9-969c-efbfca033ba0",
       "name": "John Smith",
       "email": "john@example.com",
       "phone": "123-456-7890",
@@ -873,9 +646,9 @@ URL: GET http://localhost:8005/health/agent_service
 Success! Response:
 {
   "service_name": "agent_service",
-  "status": "degraded",
-  "last_checked": "2025-04-24T14:46:55.103498",
-  "response_time": 20.80988883972168,
+  "status": "up",
+  "last_checked": "2025-04-25T06:44:38.871858",
+  "response_time": 44.779062271118164,
   "endpoint": "http://agent_service:8000/"
 }
 
@@ -884,9 +657,9 @@ URL: GET http://localhost:8005/health/booking_service
 Success! Response:
 {
   "service_name": "booking_service",
-  "status": "degraded",
-  "last_checked": "2025-04-24T14:46:55.146536",
-  "response_time": 20.1876163482666,
+  "status": "up",
+  "last_checked": "2025-04-25T06:44:38.953965",
+  "response_time": 44.87729072570801,
   "endpoint": "http://booking_service:8001/"
 }
 
@@ -895,9 +668,9 @@ URL: GET http://localhost:8005/health/sales_service
 Success! Response:
 {
   "service_name": "sales_service",
-  "status": "degraded",
-  "last_checked": "2025-04-24T14:46:55.189058",
-  "response_time": 19.920825958251953,
+  "status": "up",
+  "last_checked": "2025-04-25T06:44:39.049443",
+  "response_time": 58.045387268066406,
   "endpoint": "http://sales_service:8002/"
 }
 
@@ -906,9 +679,9 @@ URL: GET http://localhost:8005/health/invoicing_service
 Success! Response:
 {
   "service_name": "invoicing_service",
-  "status": "degraded",
-  "last_checked": "2025-04-24T14:46:55.237262",
-  "response_time": 26.250362396240234,
+  "status": "up",
+  "last_checked": "2025-04-25T06:44:39.132366",
+  "response_time": 45.583248138427734,
   "endpoint": "http://invoicing_service:8003/"
 }
 
@@ -917,9 +690,9 @@ URL: GET http://localhost:8005/health/train_booking_service
 Success! Response:
 {
   "service_name": "train_booking_service",
-  "status": "degraded",
-  "last_checked": "2025-04-24T14:46:55.279767",
-  "response_time": 19.938230514526367,
+  "status": "up",
+  "last_checked": "2025-04-25T06:44:39.215442",
+  "response_time": 45.279741287231445,
   "endpoint": "http://train_booking_service:8084/"
 }
 
@@ -928,9 +701,9 @@ URL: GET http://localhost:8005/health/train_seat_status_service
 Success! Response:
 {
   "service_name": "train_seat_status_service",
-  "status": "degraded",
-  "last_checked": "2025-04-24T14:46:55.322103",
-  "response_time": 19.889116287231445,
+  "status": "up",
+  "last_checked": "2025-04-25T06:44:39.300784",
+  "response_time": 45.79567909240723,
   "endpoint": "http://train_seat_status_service:8090/"
 }
 
@@ -947,7 +720,7 @@ Success! Response:
 {
   "status_code": 404,
   "headers": {
-    "date": "Thu, 24 Apr 2025 14:46:54 GMT",
+    "date": "Fri, 25 Apr 2025 06:44:38 GMT",
     "server": "uvicorn",
     "content-length": "28",
     "content-type": "application/json"
@@ -963,46 +736,7 @@ URL: GET http://localhost:8005/errors/agent_service
 Success! Response:
 [
   {
-    "timestamp": "2025-04-24T14:03:16.320479",
-    "service_name": "agent_service",
-    "endpoint": "agents/00000000-0000-0000-0000-000000000000",
-    "status_code": 404,
-    "error_message": "{\"detail\":\"Agent not found\"}",
-    "request_details": {
-      "method": "GET",
-      "url": "http://agent_service:8000/agents/00000000-0000-0000-0000-000000000000",
-      "data": null,
-      "headers": null
-    }
-  },
-  {
-    "timestamp": "2025-04-24T14:21:07.995297",
-    "service_name": "agent_service",
-    "endpoint": "agents/00000000-0000-0000-0000-000000000000",
-    "status_code": 404,
-    "error_message": "{\"detail\":\"Agent not found\"}",
-    "request_details": {
-      "method": "GET",
-      "url": "http://agent_service:8000/agents/00000000-0000-0000-0000-000000000000",
-      "data": null,
-      "headers": null
-    }
-  },
-  {
-    "timestamp": "2025-04-24T14:29:14.176542",
-    "service_name": "agent_service",
-    "endpoint": "agents/00000000-0000-0000-0000-000000000000",
-    "status_code": 404,
-    "error_message": "{\"detail\":\"Agent not found\"}",
-    "request_details": {
-      "method": "GET",
-      "url": "http://agent_service:8000/agents/00000000-0000-0000-0000-000000000000",
-      "data": null,
-      "headers": null
-    }
-  },
-  {
-    "timestamp": "2025-04-24T14:46:55.366794",
+    "timestamp": "2025-04-25T06:44:39.387623",
     "service_name": "agent_service",
     "endpoint": "agents/00000000-0000-0000-0000-000000000000",
     "status_code": 404,

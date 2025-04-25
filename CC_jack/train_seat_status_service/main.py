@@ -6,6 +6,18 @@ import os
 import httpx
 
 app = FastAPI()
+@app.get("/")
+def read_root():
+    """Root endpoint for health checks"""
+    return {
+        "service": "Agent Service",
+        "status": "running",
+        "endpoints": [
+            "/agents",
+            "/agents/{agent_id}",
+            "/agents/{agent_id}/availability"
+        ]
+    }
 
 # Environment variables for service URLs
 TRAIN_BOOKING_SERVICE_URL = os.getenv("TRAIN_BOOKING_SERVICE_URL", "http://train_booking_service:8084")

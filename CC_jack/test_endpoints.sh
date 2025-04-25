@@ -266,7 +266,7 @@ call_api "GET" "${ERROR_HANDLING_SERVICE}/health/invoicing_service" "" "Check he
 call_api "GET" "${ERROR_HANDLING_SERVICE}/health/train_booking_service" "" "Check health status of train booking service"
 call_api "GET" "${ERROR_HANDLING_SERVICE}/health/train_seat_status_service" "" "Check health status of train seat status service"
 
-# Try fetching details of a non-existent agent to simulate and log a 404 or related error
+# Treof a non-existent agent to simulate and log a 404 or related error
 call_api "POST" "${ERROR_HANDLING_SERVICE}/proxy" '{
     "target_service": "agent_service",
     "endpoint": "agents/00000000-0000-0000-0000-000000000000",

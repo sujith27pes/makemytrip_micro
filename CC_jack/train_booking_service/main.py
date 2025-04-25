@@ -7,6 +7,18 @@ import httpx
 from datetime import datetime
 
 app = FastAPI()
+@app.get("/")
+def read_root():
+    """Root endpoint for health checks"""
+    return {
+        "service": "Agent Service",
+        "status": "running",
+        "endpoints": [
+            "/agents",
+            "/agents/{agent_id}",
+            "/agents/{agent_id}/availability"
+        ]
+    }
 
 # Environment variables for service URLs
 AGENT_SERVICE_URL = os.getenv("AGENT_SERVICE_URL", "http://agent_service:8000")
