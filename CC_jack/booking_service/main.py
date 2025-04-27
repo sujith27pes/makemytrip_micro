@@ -12,6 +12,18 @@ AGENT_SERVICE_URL = os.getenv("AGENT_SERVICE_URL", "http://agent_service:8000")
 # Mock database for bookings and commissions
 bookings_db = {}
 commissions_db = {}
+@app.get("/")
+def read_root():
+    """Root endpoint for health checks"""
+    return {
+        "service": "Agent Service",
+        "status": "running",
+        "endpoints": [
+            "/agents",
+            "/agents/{agent_id}",
+            "/agents/{agent_id}/availability"
+        ]
+    }
 
 class Booking(BaseModel):
     agent_id: UUID

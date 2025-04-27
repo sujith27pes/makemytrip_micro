@@ -7,6 +7,18 @@ app = FastAPI()
 # Mock database for invoices and payouts
 invoices_db = {}
 payouts_db = {}
+@app.get("/")
+def read_root():
+    """Root endpoint for health checks"""
+    return {
+        "service": "Agent Service",
+        "status": "running",
+        "endpoints": [
+            "/agents",
+            "/agents/{agent_id}",
+            "/agents/{agent_id}/availability"
+        ]
+    }
 
 class Invoice(BaseModel):
     agent_id: UUID

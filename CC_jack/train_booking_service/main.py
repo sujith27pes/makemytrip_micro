@@ -14,6 +14,18 @@ BOOKING_SERVICE_URL = os.getenv("BOOKING_SERVICE_URL", "http://booking_service:8
 
 # In-memory database for train bookings
 train_bookings_db = {}
+@app.get("/")
+def read_root():
+    """Root endpoint for health checks"""
+    return {
+        "service": "Agent Service",
+        "status": "running",
+        "endpoints": [
+            "/agents",
+            "/agents/{agent_id}",
+            "/agents/{agent_id}/availability"
+        ]
+    }
 
 # Train data store (simplified)
 trains_db = {

@@ -13,6 +13,18 @@ TRAIN_BOOKING_SERVICE_URL = os.getenv("TRAIN_BOOKING_SERVICE_URL", "http://train
 # Simple in-memory database for seat reservations
 # Structure: {booking_id: {"train_number": str, "seats": List[str], "travel_date": str, "status": str}}
 seat_reservations_db = {}
+@app.get("/")
+def read_root():
+    """Root endpoint for health checks"""
+    return {
+        "service": "Agent Service",
+        "status": "running",
+        "endpoints": [
+            "/agents",
+            "/agents/{agent_id}",
+            "/agents/{agent_id}/availability"
+        ]
+    }
 
 class SeatStatus(BaseModel):
     booking_id: UUID

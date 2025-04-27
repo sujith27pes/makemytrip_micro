@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test Results</title>
+    <style>
+        body { font-family: monospace; white-space: pre-wrap; padding: 20px; }
+        .header { font-size: 20px; font-weight: bold; margin-bottom: 20px; }
+        .success { color: green; }
+        .error { color: red; }
+        .test { color: #AA6600; }
+        .section { color: blue; font-weight: bold; margin-top: 15px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+<div class="header">Travel Agent Management System API Test Results</div>
+<div class="content">
+=== Travel Agent Management System API Test Script ===
+This script will test all existing endpoints of your microservices application
+Sat Apr 26 01:11:05 AM IST 2025
+
+=== Testing Agent Service ===
+Testing: Create a new agent
+URL: POST http://localhost:8000/agents
+Payload: {
+    "name": "John Smith",
+    "email": "john@example.com",
+    "phone": "123-456-7890",
+    "availability": {
+        "days": ["Monday", "Wednesday", "Friday"],
+        "shift": "morning"
+    }
+}
+Success! Response:
+{
+  "id": "6dbfdeab-2bbd-474f-a533-53220a93364e",
+  "name": "John Smith",
+  "email": "john@example.com",
+  "phone": "123-456-7890",
+  "rating": 0.0,
+  "availability": {
+    "days": [
+      "Monday",
+      "Wednesday",
+      "Friday"
+    ],
+    "shift": "morning"
+  }
+}
+Created agent with ID: 6dbfdeab-2bbd-474f-a533-53220a93364e
+
+Testing: List all agents
+URL: GET http://localhost:8000/agents
+Success! Response:
+[
+  {
+    "id": "7650884a-7c6f-44e7-8bae-001a2c821190",
+    "name": "John Smith",
+    "email": "john@example.com",
+    "phone": "123-456-7890",
+    "rating": 0.0,
+    "availability": {
+      "days": [
+        "Tuesday",
+        "Thursday"
+      ],
+      "shift": "evening"
+    }
+  },
+  {
+    "id": "6dbfdeab-2bbd-474f-a533-53220a93364e",
+    "name": "John Smith",
+    "email": "john@example.com",
+    "phone": "123-456-7890",
+    "rating": 0.0,
+    "availability": {
+      "days": [
+        "Monday",
+        "Wednesday",
+        "Friday"
+      ],
+      "shift": "morning"
+    }
+  }
+]
+
+Testing: Get specific agent
+URL: GET http://localhost:8000/agents/6dbfdeab-2bbd-474f-a533-53220a93364e
+Success! Response:
+{
+  "id": "6dbfdeab-2bbd-474f-a533-53220a93364e",
+  "name": "John Smith",
+  "email": "john@example.com",
+  "phone": "123-456-7890",
+  "rating": 0.0,
+  "availability": {
+    "days": [
+      "Monday",
+      "Wednesday",
+      "Friday"
+    ],
+    "shift": "morning"
+  }
+}
+
+Testing: Update agent availability
+URL: PUT http://localhost:8000/agents/6dbfdeab-2bbd-474f-a533-53220a93364e/availability
+Payload: {
+    "days": ["Tuesday", "Thursday"],
+    "shift": "evening"
+}
+Success! Response:
+{
+  "days": [
+    "Tuesday",
+    "Thursday"
+  ],
+  "shift": "evening"
+}
+
+Testing: Get agent availability
+URL: GET http://localhost:8000/agents/6dbfdeab-2bbd-474f-a533-53220a93364e/availability
+Success! Response:
+{
+  "days": [
+    "Tuesday",
+    "Thursday"
+  ],
+  "shift": "evening"
+}
+
+=== Testing Booking Service ===
+Testing: Create a new booking
+URL: POST http://localhost:8001/bookings
+Payload: {
+    "agent_id": "6dbfdeab-2bbd-474f-a533-53220a93364e",
+    "customer_name": "Alice Johnson",
+    "service_type": "Flight",
+    "price": 350.00
+}
+Success! Response:
+{
+  "booking_id": "b0daf303-e29f-40b8-bcab-38155001c0dd",
+  "commission_amount": 35.0
+}
+Created booking with ID: b0daf303-e29f-40b8-bcab-38155001c0dd
+
+Testing: Get agent bookings
+URL: GET http://localhost:8001/agents/6dbfdeab-2bbd-474f-a533-53220a93364e/bookings
+Success! Response:
+[
+  {
+    "agent_id": "6dbfdeab-2bbd-474f-a533-53220a93364e",
+    "customer_name": "Alice Johnson",
+    "service_type": "Flight",
+    "price": 350.0
+  }
+]
+
+Testing: Get agent commission
+URL: GET http://localhost:8001/agents/6dbfdeab-2bbd-474f-a533-53220a93364e/commission
+Success! Response:
+[
+  {
+    "agent_id": "6dbfdeab-2bbd-474f-a533-53220a93364e",
+    "booking_id": "b0daf303-e29f-40b8-bcab-38155001c0dd",
+    "commission_percentage": 10.0,
+    "commission_amount": 35.0
+  }
+]
+
+=== Testing Sales Service ===
+Testing: Record a sale
+URL: POST http://localhost:8002/sales/record
+Payload: {
+    "agent_id": "6dbfdeab-2bbd-474f-a533-53220a93364e",
+    "price": 450.00
+}
+Success! Response:
+{
+  "message": "Sale recorded"
+}
+
+Testing: Get sales by agent
+URL: GET http://localhost:8002/sales/by-agent/6dbfdeab-2bbd-474f-a533-53220a93364e
+Success! Response:
+[
+  {
+    "agent_id": "6dbfdeab-2bbd-474f-a533-53220a93364e",
+    "sales": 450.0
+  }
+]
+
+Testing: Get sales trends
+URL: GET http://localhost:8002/sales/trends
+Success! Response:
+{
+  "trend": "positive",
+  "growth_percentage": 10
+}
+
+=== Testing Invoicing Service ===
+Testing: Generate an invoice
+URL: POST http://localhost:8003/invoice
+Payload: {
+    "agent_id": "6dbfdeab-2bbd-474f-a533-53220a93364e",
+    "customer_name": "Bob Wilson",
+    "amount": 550.00
+}
+Success! Response:
+{
+  "invoice_id": "1b7815b7-d8c1-4435-a086-e121ac29c9b8",
+  "amount": 550.0
+}
+
+Testing: Process agent payout
+URL: POST http://localhost:8003/payout
+Payload: {
+    "agent_id": "6dbfdeab-2bbd-474f-a533-53220a93364e",
+    "payout_amount": 220.00
+}
+Success! Response:
+{
+  "payout_id": "ddab373d-f4fa-4563-be4d-1e9de604d03d",
+  "amount": 220.0
+}
+
+Testing: Get agent payouts
+URL: GET http://localhost:8003/agents/6dbfdeab-2bbd-474f-a533-53220a93364e/payouts
+Success! Response:
+[
+  {
+    "agent_id": "6dbfdeab-2bbd-474f-a533-53220a93364e",
+    "payout_amount": 220.0
+  }
+]
+
+=== Testing Train Booking Service ===
+Testing: List all trains
+URL: GET http://localhost:8084/trains
+Success! Response:
+[
+  {
+    "train_number": "TRN001",
+    "name": "Express 505",
+    "source": "New York",
+    "destination": "Washington DC",
+    "departure_time": "08:30",
+    "arrival_time": "12:00",
+    "available_classes": [
+      "First Class",
+      "Business",
+      "Economy"
+    ],
+    "base_price": {
+      "First Class": 150.0,
+      "Business": 100.0,
+      "Economy": 50.0
+    }
+  },
+  {
+    "train_number": "TRN002",
+    "name": "Coastal Link",
+    "source": "Boston",
+    "destination": "New York",
+    "departure_time": "10:15",
+    "arrival_time": "13:45",
+    "available_classes": [
+      "First Class",
+      "Economy"
+    ],
+    "base_price": {
+      "First Class": 120.0,
+      "Economy": 45.0
+    }
+  },
+  {
+    "train_number": "TRN003",
+    "name": "Western Eagle",
+    "source": "Chicago",
+    "destination": "Denver",
+    "departure_time": "14:20",
+    "arrival_time": "22:35",
+    "available_classes": [
+      "First Class",
+      "Business",
+      "Economy"
+    ],
+    "base_price": {
+      "First Class": 280.0,
+      "Business": 180.0,
+      "Economy": 120.0
+    }
+  }
+]
+
+Testing: Get specific train details
+URL: GET http://localhost:8084/trains/TRN001
+Success! Response:
+{
+  "train_number": "TRN001",
+  "name": "Express 505",
+  "source": "New York",
+  "destination": "Washington DC",
+  "departure_time": "08:30",
+  "arrival_time": "12:00",
+  "available_classes": [
+    "First Class",
+    "Business",
+    "Economy"
+  ],
+  "base_price": {
+    "First Class": 150.0,
+    "Business": 100.0,
+    "Economy": 50.0
+  }
+}
+
+Testing: Create a new train booking
+URL: POST http://localhost:8084/train-bookings
+Payload: {
+    "agent_id": "6dbfdeab-2bbd-474f-a533-53220a93364e",
+    "train_number": "TRN001",
+    "travel_date": "2025-05-15",
+    "passenger_count": 2,
+    "train_class": "First Class",
+    "passengers": [
+        {
+            "name": "Jane Smith",
+            "age": 35,
+            "id_type": "Passport",
+            "id_number": "AB123456"
+        },
+        {
+            "name": "David Smith",
+            "age": 40,
+            "id_type": "Passport",
+            "id_number": "CD789012"
+        }
+    ],
+    "special_requests": "Window seats preferred"
+}
+Success! Response:
+{
+  "booking_id": "644fd877-1102-4de3-8c80-417e209909a2",
+  "agent_id": "6dbfdeab-2bbd-474f-a533-53220a93364e",
+  "train_number": "TRN001",
+  "train_name": "Express 505",
+  "source": "New York",
+  "destination": "Washington DC",
+  "travel_date": "2025-05-15",
+  "departure_time": "08:30",
+  "arrival_time": "12:00",
+  "train_class": "First Class",
+  "price_per_passenger": 150.0,
+  "total_price": 300.0,
+  "passenger_count": 2,
+  "passengers": [
+    {
+      "name": "Jane Smith",
+      "age": 35,
+      "id_type": "Passport",
+      "id_number": "AB123456"
+    },
+    {
+      "name": "David Smith",
+      "age": 40,
+      "id_type": "Passport",
+      "id_number": "CD789012"
+    }
+  ],
+  "special_requests": "Window seats preferred",
+  "booking_date": "2025-04-25",
+  "status": "Confirmed"
+}
+Created train booking with ID: 644fd877-1102-4de3-8c80-417e209909a2
+
+Testing: List all train bookings
+URL: GET http://localhost:8084/train-bookings
+Success! Response:
+[
+  {
+    "booking_id": "a37fb048-0d4c-4b04-9a26-bdef40270b69",
+    "agent_id": "7650884a-7c6f-44e7-8bae-001a2c821190",
+    "train_number": "TRN001",
+    "train_name": "Express 505",
+    "source": "New York",
+    "destination": "Washington DC",
+    "travel_date": "2025-05-15",
+    "departure_time": "08:30",
+    "arrival_time": "12:00",
+    "train_class": "First Class",
+    "price_per_passenger": 150.0,
+    "total_price": 300.0,
+    "passenger_count": 2,
+    "passengers": [
+      {
+        "name": "Jane Smith",
+        "age": 35,
+        "id_type": "Passport",
+        "id_number": "AB123456"
+      },
+      {
+        "name": "David Smith",
+        "age": 40,
+        "id_type": "Passport",
+        "id_number": "CD789012"
+      }
+    ],
+    "special_requests": "Window seats preferred",
+    "booking_date": "2025-04-25",
+    "status": "Cancelled"
+  },
+  {
+    "booking_id": "644fd877-1102-4de3-8c80-417e209909a2",
+    "agent_id": "6dbfdeab-2bbd-474f-a533-53220a93364e",
+    "train_number": "TRN001",
+    "train_name": "Express 505",
+    "source": "New York",
+    "destination": "Washington DC",
+    "travel_date": "2025-05-15",
+    "departure_time": "08:30",
+    "arrival_time": "12:00",
+    "train_class": "First Class",
+    "price_per_passenger": 150.0,
+    "total_price": 300.0,
+    "passenger_count": 2,
+    "passengers": [
+      {
+        "name": "Jane Smith",
+        "age": 35,
+        "id_type": "Passport",
+        "id_number": "AB123456"
+      },
+      {
+        "name": "David Smith",
+        "age": 40,
+        "id_type": "Passport",
+        "id_number": "CD789012"
+      }
+    ],
+    "special_requests": "Window seats preferred",
+    "booking_date": "2025-04-25",
+    "status": "Confirmed"
+  }
+]
+
+Testing: Get specific train booking details
+URL: GET http://localhost:8084/train-bookings/644fd877-1102-4de3-8c80-417e209909a2
+Success! Response:
+{
+  "booking_id": "644fd877-1102-4de3-8c80-417e209909a2",
+  "agent_id": "6dbfdeab-2bbd-474f-a533-53220a93364e",
+  "train_number": "TRN001",
+  "train_name": "Express 505",
+  "source": "New York",
+  "destination": "Washington DC",
+  "travel_date": "2025-05-15",
+  "departure_time": "08:30",
+  "arrival_time": "12:00",
+  "train_class": "First Class",
+  "price_per_passenger": 150.0,
+  "total_price": 300.0,
+  "passenger_count": 2,
+  "passengers": [
+    {
+      "name": "Jane Smith",
+      "age": 35,
+      "id_type": "Passport",
+      "id_number": "AB123456"
+    },
+    {
+      "name": "David Smith",
+      "age": 40,
+      "id_type": "Passport",
+      "id_number": "CD789012"
+    }
+  ],
+  "special_requests": "Window seats preferred",
+  "booking_date": "2025-04-25",
+  "status": "Confirmed"
+}
+
+Testing: Get agent's train bookings
+URL: GET http://localhost:8084/agents/6dbfdeab-2bbd-474f-a533-53220a93364e/train-bookings
+Success! Response:
+[
+  {
+    "booking_id": "644fd877-1102-4de3-8c80-417e209909a2",
+    "agent_id": "6dbfdeab-2bbd-474f-a533-53220a93364e",
+    "train_number": "TRN001",
+    "train_name": "Express 505",
+    "source": "New York",
+    "destination": "Washington DC",
+    "travel_date": "2025-05-15",
+    "departure_time": "08:30",
+    "arrival_time": "12:00",
+    "train_class": "First Class",
+    "price_per_passenger": 150.0,
+    "total_price": 300.0,
+    "passenger_count": 2,
+    "passengers": [
+      {
+        "name": "Jane Smith",
+        "age": 35,
+        "id_type": "Passport",
+        "id_number": "AB123456"
+      },
+      {
+        "name": "David Smith",
+        "age": 40,
+        "id_type": "Passport",
+        "id_number": "CD789012"
+      }
+    ],
+    "special_requests": "Window seats preferred",
+    "booking_date": "2025-04-25",
+    "status": "Confirmed"
+  }
+]
+
+=== Testing Train Seat Status Service ===
+Testing: Reserve seats for a train booking
+URL: POST http://localhost:8090/seat-reservations
+Payload: {
+    "booking_id": "644fd877-1102-4de3-8c80-417e209909a2",
+    "train_number": "TRN001",
+    "seats": ["FC1-1A", "FC1-1B"],
+    "travel_date": "2025-05-15",
+    "status": "confirmed"
+}
+Success! Response:
+{
+  "booking_id": "644fd877-1102-4de3-8c80-417e209909a2",
+  "train_number": "TRN001",
+  "seats": [
+    "FC1-1A",
+    "FC1-1B"
+  ],
+  "travel_date": "2025-05-15",
+  "status": "confirmed"
+}
+
+Testing: Get seat status for booking
+URL: GET http://localhost:8090/bookings/644fd877-1102-4de3-8c80-417e209909a2/seats/status
+Success! Response:
+{
+  "booking_id": "644fd877-1102-4de3-8c80-417e209909a2",
+  "train_number": "TRN001",
+  "travel_date": "2025-05-15",
+  "seats": [
+    "FC1-1A",
+    "FC1-1B"
+  ],
+  "status": "confirmed"
+}
+
+Testing: Cancel seat reservations
+URL: PUT http://localhost:8090/bookings/644fd877-1102-4de3-8c80-417e209909a2/seats/cancel
+Success! Response:
+{
+  "message": "Seat reservations cancelled successfully",
+  "booking_id": "644fd877-1102-4de3-8c80-417e209909a2",
+  "status": "cancelled"
+}
+
+=== Testing Error Handling Service ===
+Testing: Retrieve service registry (list of registered services)
+URL: GET http://localhost:8005/registry
+Success! Response:
+{
+  "agent_service": "http://agent_service:8000",
+  "booking_service": "http://booking_service:8001",
+  "sales_service": "http://sales_service:8002",
+  "invoicing_service": "http://invoicing_service:8003",
+  "train_booking_service": "http://train_booking_service:8084",
+  "train_seat_status_service": "http://train_seat_status_service:8090"
+}
+
+Testing: Register a new test service
+URL: POST http://localhost:8005/registry/test_service?url=http://test_service:9999
+Success! Response:
+{
+  "message": "Service 'test_service' registered at http://test_service:9999"
+}
+
+Testing: Fetch overall health status of all services
+URL: GET http://localhost:8005/health
+Success! Response:
+{
+  "train_booking_service": {
+    "service_name": "train_booking_service",
+    "status": "degraded",
+    "last_checked": "2025-04-25T19:41:07.182917",
+    "response_time": 137.12549209594727,
+    "endpoint": "http://train_booking_service:8084/"
+  },
+  "booking_service": {
+    "service_name": "booking_service",
+    "status": "degraded",
+    "last_checked": "2025-04-25T19:41:07.185361",
+    "response_time": 256.17313385009766,
+    "endpoint": "http://booking_service:8001/"
+  },
+  "invoicing_service": {
+    "service_name": "invoicing_service",
+    "status": "degraded",
+    "last_checked": "2025-04-25T19:41:07.182337",
+    "response_time": 175.06718635559082,
+    "endpoint": "http://invoicing_service:8003/"
+  },
+  "train_seat_status_service": {
+    "service_name": "train_seat_status_service",
+    "status": "degraded",
+    "last_checked": "2025-04-25T19:41:07.185225",
+    "response_time": 99.56669807434082,
+    "endpoint": "http://train_seat_status_service:8090/"
+  },
+  "sales_service": {
+    "service_name": "sales_service",
+    "status": "degraded",
+    "last_checked": "2025-04-25T19:41:07.185304",
+    "response_time": 216.2179946899414,
+    "endpoint": "http://sales_service:8002/"
+  },
+  "agent_service": {
+    "service_name": "agent_service",
+    "status": "degraded",
+    "last_checked": "2025-04-25T19:41:07.182815",
+    "response_time": 293.32447052001953,
+    "endpoint": "http://agent_service:8000/"
+  },
+  "test_service": {
+    "service_name": "test_service",
+    "status": "down",
+    "last_checked": "2025-04-25T19:41:07.253078",
+    "response_time": 0.0,
+    "endpoint": "http://test_service:9999/"
+  }
+}
+
+Testing: Retrieve historical error logs
+URL: GET http://localhost:8005/errors
+Success! Response:
+[
+  {
+    "timestamp": "2025-04-25T19:37:30.063009",
+    "service_name": "test_service",
+    "endpoint": "http://test_service:9999/",
+    "status_code": 503,
+    "error_message": "[Errno -2] Name or service not known",
+    "request_details": null
+  },
+  {
+    "timestamp": "2025-04-25T19:37:30.855486",
+    "service_name": "agent_service",
+    "endpoint": "agents/00000000-0000-0000-0000-000000000000",
+    "status_code": 404,
+    "error_message": "{\"detail\":\"Agent not found\"}",
+    "request_details": {
+      "method": "GET",
+      "url": "http://agent_service:8000/agents/00000000-0000-0000-0000-000000000000",
+      "data": null,
+      "headers": null
+    }
+  },
+  {
+    "timestamp": "2025-04-25T19:41:07.253119",
+    "service_name": "test_service",
+    "endpoint": "http://test_service:9999/",
+    "status_code": 503,
+    "error_message": "[Errno -2] Name or service not known",
+    "request_details": null
+  }
+]
+
+Testing: Proxy request to agent_service to fetch agent list
+URL: POST http://localhost:8005/proxy
+Payload: {
+    "target_service": "agent_service",
+    "endpoint": "agents",
+    "method": "GET",
+    "data": null,
+    "headers": null
+}
+Success! Response:
+{
+  "status_code": 200,
+  "headers": {
+    "date": "Fri, 25 Apr 2025 19:41:07 GMT",
+    "server": "uvicorn",
+    "content-length": "389",
+    "content-type": "application/json"
+  },
+  "data": [
+    {
+      "id": "7650884a-7c6f-44e7-8bae-001a2c821190",
+      "name": "John Smith",
+      "email": "john@example.com",
+      "phone": "123-456-7890",
+      "rating": 0.0,
+      "availability": {
+        "days": [
+          "Tuesday",
+          "Thursday"
+        ],
+        "shift": "evening"
+      }
+    },
+    {
+      "id": "6dbfdeab-2bbd-474f-a533-53220a93364e",
+      "name": "John Smith",
+      "email": "john@example.com",
+      "phone": "123-456-7890",
+      "rating": 0.0,
+      "availability": {
+        "days": [
+          "Tuesday",
+          "Thursday"
+        ],
+        "shift": "evening"
+      }
+    }
+  ],
+  "service": "agent_service"
+}
+
+Testing: Simulate proxy request to a nonexistent service (should generate error log)
+URL: POST http://localhost:8005/proxy
+Payload: {
+    "target_service": "nonexistent_service",
+    "endpoint": "test",
+    "method": "GET",
+    "data": null,
+    "headers": null
+}
+Success! Response:
+{
+  "detail": "Service 'nonexistent_service' not found in registry"
+}
+
+Testing: Check health status of agent service
+URL: GET http://localhost:8005/health/agent_service
+Success! Response:
+{
+  "service_name": "agent_service",
+  "status": "degraded",
+  "last_checked": "2025-04-25T19:41:07.501712",
+  "response_time": 41.03493690490723,
+  "endpoint": "http://agent_service:8000/"
+}
+
+Testing: Check health status of booking service
+URL: GET http://localhost:8005/health/booking_service
+Success! Response:
+{
+  "service_name": "booking_service",
+  "status": "degraded",
+  "last_checked": "2025-04-25T19:41:07.579015",
+  "response_time": 40.3599739074707,
+  "endpoint": "http://booking_service:8001/"
+}
+
+Testing: Check health status of sales service
+URL: GET http://localhost:8005/health/sales_service
+Success! Response:
+{
+  "service_name": "sales_service",
+  "status": "degraded",
+  "last_checked": "2025-04-25T19:41:07.656541",
+  "response_time": 39.73960876464844,
+  "endpoint": "http://sales_service:8002/"
+}
+
+Testing: Check health status of invoicing service
+URL: GET http://localhost:8005/health/invoicing_service
+Success! Response:
+{
+  "service_name": "invoicing_service",
+  "status": "degraded",
+  "last_checked": "2025-04-25T19:41:07.750050",
+  "response_time": 55.0684928894043,
+  "endpoint": "http://invoicing_service:8003/"
+}
+
+Testing: Check health status of train booking service
+URL: GET http://localhost:8005/health/train_booking_service
+Success! Response:
+{
+  "service_name": "train_booking_service",
+  "status": "degraded",
+  "last_checked": "2025-04-25T19:41:07.830069",
+  "response_time": 42.33574867248535,
+  "endpoint": "http://train_booking_service:8084/"
+}
+
+Testing: Check health status of train seat status service
+URL: GET http://localhost:8005/health/train_seat_status_service
+Success! Response:
+{
+  "service_name": "train_seat_status_service",
+  "status": "degraded",
+  "last_checked": "2025-04-25T19:41:07.906705",
+  "response_time": 40.63534736633301,
+  "endpoint": "http://train_seat_status_service:8090/"
+}
+
+Testing: Proxy request for non-existent agent to generate error entry
+URL: POST http://localhost:8005/proxy
+Payload: {
+    "target_service": "agent_service",
+    "endpoint": "agents/00000000-0000-0000-0000-000000000000",
+    "method": "GET",
+    "data": null,
+    "headers": null
+}
+Success! Response:
+{
+  "status_code": 404,
+  "headers": {
+    "date": "Fri, 25 Apr 2025 19:41:07 GMT",
+    "server": "uvicorn",
+    "content-length": "28",
+    "content-type": "application/json"
+  },
+  "data": {
+    "detail": "Agent not found"
+  },
+  "service": "agent_service"
+}
+
+Testing: Get logged errors specific to agent service
+URL: GET http://localhost:8005/errors/agent_service
+Success! Response:
+[
+  {
+    "timestamp": "2025-04-25T19:37:30.855486",
+    "service_name": "agent_service",
+    "endpoint": "agents/00000000-0000-0000-0000-000000000000",
+    "status_code": 404,
+    "error_message": "{\"detail\":\"Agent not found\"}",
+    "request_details": {
+      "method": "GET",
+      "url": "http://agent_service:8000/agents/00000000-0000-0000-0000-000000000000",
+      "data": null,
+      "headers": null
+    }
+  },
+  {
+    "timestamp": "2025-04-25T19:41:07.990873",
+    "service_name": "agent_service",
+    "endpoint": "agents/00000000-0000-0000-0000-000000000000",
+    "status_code": 404,
+    "error_message": "{\"detail\":\"Agent not found\"}",
+    "request_details": {
+      "method": "GET",
+      "url": "http://agent_service:8000/agents/00000000-0000-0000-0000-000000000000",
+      "data": null,
+      "headers": null
+    }
+  }
+]
+
+Testing: Remove test_service from registry
+URL: DELETE http://localhost:8005/registry/test_service
+Success! Response:
+{
+  "message": "Service 'test_service' deregistered"
+}
+
+=== Test Complete ===
+All endpoints have been tested.
+
+Generating HTML report...
+</div>
+</body>
+</html>

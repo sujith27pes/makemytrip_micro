@@ -6,6 +6,18 @@ app = FastAPI()
 
 # In-memory sales store
 sales_data: Dict[str, float] = {}
+@app.get("/")
+def read_root():
+    """Root endpoint for health checks"""
+    return {
+        "service": "Agent Service",
+        "status": "running",
+        "endpoints": [
+            "/agents",
+            "/agents/{agent_id}",
+            "/agents/{agent_id}/availability"
+        ]
+    }
 
 class BookingData(BaseModel):
     agent_id: str
